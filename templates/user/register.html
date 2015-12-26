@@ -1,0 +1,214 @@
+
+<div ng-controller="RegistrationController as regCrt">
+	<div class="navbar-fixed-top">
+		<div class="container">
+			<div class="progress">
+				<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="70"
+				aria-valuemin="0" aria-valuemax="100" style="width:{{regCrt.progressPercent}}%">
+				<span class="sr-only">{{regCrt.progressPercent}}% Complete</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+	<div class="panel" ng-class="regCrt.color">
+		<div class="panel-heading">
+			<h1>Registration</h1>			
+		</div>
+		<div class="panel-body">
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="alert alert-danger" ng-init="regCrt.showError = false" ng-show="regCrt.showError">
+					<span >{{regCrt.ErroUserExist}}
+					</span>
+				</div>
+				<div class="row well well-sm">
+					<div class="col-md-3">
+						<div class="form-group has-feedback">
+							<label for="user_fname" class="">First Name</label>
+							<input type="text" 
+							id="user_fname" 
+							name="fname" 
+							autocomplete="fname" 
+							class="form-control" 
+							data-toggle="tooltip"
+							data-placement="auto" 
+							title="Please enter your first name here"
+							placeholder="Maud"
+							autofocus
+							required
+							ng-model="regCrt.fname"
+							ng-keyup = "regCrt.checkProgressBar($event)"
+							ng-change="regCrt.validationProcess()"
+							ng-blur="regCrt.checkProgressBar($event)"
+							aria-describedby="inputFnameStatus">						
+							<span class="glyphicon form-control-feedback" 
+							aria-hidden="true"></span>
+							<span id="inputFnameStatus" 
+							class="sr-only"></span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group has-feedback">
+							<label for="user_lname" class="">Last Name</label>
+							<input type="text" 
+							id="user_lname" 
+							name="lname" 
+							autocomplete="lname" 
+							class="form-control"  
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your last name here"
+							placeholder="Adams"
+							required
+							ng-model="regCrt.lname"
+							ng-keyup = "regCrt.checkProgressBar($event)"
+							ng-change="regCrt.validationProcess()"
+							ng-blur="regCrt.checkProgressBar($event)"
+
+							aria-describedby="inputLnameStatus">						
+							<span class="glyphicon form-control-feedback" 
+							aria-hidden="true"></span>
+							<span id="inputLnameStatus" 
+							class="sr-only"></span>
+						</div>
+					</div>			 
+					<div class="col-md-3">
+						<div class="form-group has-feedback">
+							<label for="user_email" class="">Email</label>
+							<input type="email" 
+							id="user_email" 
+							name="email" 
+							autocomplete="email" 
+							class="form-control"  
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="name@example.com"
+							placeholder="name@example.com"
+							required
+							ng-model="regCrt.email"
+							ng-keyup = "regCrt.checkProgressBar($event, 0, 1)"
+							ng-change="regCrt.validationProcess()"
+							ng-blur="regCrt.checkProgressBar($event, 0, 1)"
+
+							aria-describedby="inputEmailStatus">						
+							<span class="glyphicon form-control-feedback" 
+							aria-hidden="true"></span>
+							<span id="inputEmailStatus" 
+							class="sr-only"></span>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group has-feedback">
+							<label for="user_password" class="">Password</label>
+							<input type="password" 
+							id="user_password" 
+							name="password" 
+							autocomplete="false" 
+							class="form-control" 					
+							placeholder="password"
+							required
+							ng-model="regCrt.password"
+							ng-keyup = "regCrt.checkProgressBar($event, 1, 0)"
+							ng-change="regCrt.validationProcess()"
+							ng-blur="regCrt.checkProgressBar($event, 1, 0)"						
+							aria-describedby="inputPasswordStatus">						
+							<span class="glyphicon form-control-feedback" 
+							aria-hidden="true"></span>
+							<span id="inputPasswordStatus" 
+							class="sr-only"></span>
+							<ul id="listOfErrors" class="list-group" >
+								<li ng-repeat="error in regCrt.errorMessage" class="list-group-item list-group-item-danger">{{error}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row well well-sm">
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="user_dateOfBirth">Date of Birth</label>
+							<input type="date" 
+							id="user_dateOfBirth" 
+							name="BirthDay" 
+							class="form-control" 
+							data-toggle="tooltip"
+							data-placement="auto" 
+							title="Please enter your Date of Birth"
+							ng-model="regCrt.dateOfBirth">
+						</div>
+					</div>		
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="user_company">Company</label>
+							<input type="text" 
+							id="user_company"
+							class="form-control"
+							data-toggle="tooltip"
+							data-placement="auto" 
+							title="Please enter your Company Name"
+							ng-model="regCrt.companyName">
+						</div>
+					</div>	
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="user_country">Country</label>
+							<input type="text" 
+							id="user_country"
+							class="form-control"
+							data-toggle="tooltip"
+							data-placement="auto" 
+							title="Please enter your Country"
+							ng-model="regCrt.countryName">
+						</div>
+					</div>	
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="">Gender</label>
+							<div class="radio">
+								<label>
+									<input type="radio" 
+									ng-model="regCrt.gender"  
+									name="inlineRadioOptions" 
+									id="inlineRadioMale" 
+									value="male">
+									Male	
+								</label>
+
+								<label >
+									<input type="radio" 
+									ng-model="regCrt.gender" 
+									name="inlineRadioOptions" 
+									id="inlineRadioFemale" 
+									value="female">
+									female	
+								</label>
+							</div>	
+						</div>	
+					</div>
+				</div>            
+				<div class="row well well-sm">				
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="user_biography">Bio</label>
+							<textarea rows="2"
+							id="user_biography" 
+							name="biography" 
+							class="form-control" 
+							data-toggle="tooltip"
+							data-placement="auto" 
+							title="Please enter your biography"
+							ng-model="regCrt.biography">
+						</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-footer">
+		<div class="row ">
+			<div class="col-sm-2 pull-right">
+				<input type="submit" ng-click="regCrt.addUser()"  class="btn btn-lg btn-default" ng-click="" ng-disabled="regCrt.proceed"  value="Let's Go">
+			</div>
+		</div>			
+	</div>
+</div>
+<script src="/javascript/main.js"></script>

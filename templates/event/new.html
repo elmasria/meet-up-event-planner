@@ -1,0 +1,279 @@
+<div ng-controller="EventNewController as eventNewCrt">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1>Create New Event</h1>
+		</div>
+		<div class="panel-body">
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="alert alert-danger" ng-init="eventNewCrt.showError = false" ng-show="regCrt.showError">
+					<span >
+						{{showError.errorMessage}}
+					</span>
+				</div>
+				<div class="row well well-sm">
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="event_name">
+							Event Name
+							</label>
+							<input type="text" 
+							id="event_name" 
+							name="eventName"
+							autocomplete="eventName" 
+							class="form-control"
+							placeholder="Imagine cup"
+							autofocus
+							required
+							ng-model="eventNewCrt.eventName">
+						</div>	
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="event_type">
+							Event Type
+							</label>
+							<input list="eventTypeList" 
+							id="event_type" 
+							name="eventType"
+							autocomplete="eventType"
+							class="form-control"							
+							placeholder="birthday party, conference talk, wedding, etc."
+							required
+							ng-model="eventNewCrt.eventType">
+							<datalist id="eventTypeList">
+								<option value="Birthday party">
+								<option value="Conference talk">
+								<option value="wedding">
+							</datalist>
+						</div>	
+					</div>
+					<div class="col-sm-4">
+						<label for="event_Host">
+							Event host
+						</label>
+						<input type="text"
+						id="event_Host" 
+						name="eventHost"
+						autocomplete="eventHost" 
+						class="form-control"
+						placeholder="could be an individual’s name or an organization"
+						required
+						ng-model="eventNewCrt.eventHost">
+					</div>
+				</div>
+				<div class="row well well-sm">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="event_startDate">
+							Event Start Date
+							</label>
+							<input type="datetime-local" 
+							id="event_startDate" 
+							name="eventStartDate"
+							class="form-control"
+							required
+							ng-model="eventNewCrt.eventStartDate">
+						</div>	
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">							
+							<label for="event_endtDate">
+							Event Start Date
+							</label>
+							<input type="datetime-local" 
+							id="event_endtDate" 
+							name="eventEndtDate"
+							class="form-control"
+							required
+							ng-model="eventNewCrt.eventEndtDate">
+						</div>	
+					</div>					
+				</div>
+				<div class="row well well-sm">
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="event_Location">
+								Event Location
+							</label>
+							<input type="text"
+							id="event_Location" 
+							name="eventLocation"
+							autocomplete="eventLocation" 
+							class="form-control"
+							placeholder="Lebanon, Beirut"
+							required
+							ng-model="eventNewCrt.eventLocation">
+						</div>	
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="street_number">
+								Street Number
+							</label>
+							<input type="text"
+							id="street_number" 
+							name="streetnumber"
+							autocomplete="streetnumber" 
+							class="form-control"
+							placeholder="75"
+							required
+							ng-model="eventNewCrt.street_number">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="route">
+								Street Name
+							</label>
+							<input type="text"
+							id="route" 
+							name="route"
+							autocomplete="route" 
+							class="form-control"
+							placeholder="Nicolas Chorier"
+							required
+							ng-model="eventNewCrt.route">
+						</div>	
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="locality">
+								City
+							</label>
+							<input type="text"
+							id="locality" 
+							name="locality"
+							autocomplete="locality" 
+							class="form-control"
+							placeholder="Grenoble"
+							required
+							ng-model="eventNewCrt.locality">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="administrative_area_level_1">
+								State
+							</label>
+							<input type="text"
+							id="administrative_area_level_1" 
+							name="State"
+							autocomplete="State" 
+							class="form-control"
+							placeholder="Grenoble"
+							required
+							ng-model="eventNewCrt.State">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="postal_code">
+								Postal code
+							</label>
+							<input type="text"
+							id="postal_code" 
+							name="postal_code"
+							autocomplete="postal_code" 
+							class="form-control"
+							placeholder="38000"
+							required
+							ng-model="eventNewCrt.postal_code">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="country">
+								country
+							</label>
+							<input type="text"
+							id="country" 
+							name="country"
+							autocomplete="country" 
+							class="form-control"
+							placeholder="France"
+							required
+							ng-model="eventNewCrt.country">
+						</div>
+					</div>
+				</div>
+				<div class="row well well-sm">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="event_gestEmail">Gest Email</label>
+						<input type="email"
+						id="event_gestEmail" 
+						name="email"
+						autocomplete="email" 
+						class="form-control"
+						placeholder="yourfriend@example.com"
+						required
+						ng-model="eventNewCrt.gestEmail"
+						>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-group">
+							<a href="#" id="listOfUsers" ng-click="eventNewCrt.preventEvent($event)" class="btn btn-info pull-right"  data-toggle="modal" data-target="#myModal">
+							choose from list
+							</a>
+						</div>	
+					</div>
+					<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" ng-click="eventNewCrt.preventEvent($event)" ValidatorEnable="false"  class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Choose Friend from List</h4>
+								</div>
+								<div class="modal-body">
+									<div class="list-group">
+										<a href="#" ng-click="eventNewCrt.preventEvent($event)" class="list-group-item">
+											<div class="row">
+												<div class="col-sm-1" ng-init="eventNewCrt.useremail='ahmad@test.com'">
+													<img src="/images/Default_user_icon.png" class="img-responsive img-rounded" alt="Defalt user image">
+												</div>
+												<div class="col-sm-7">
+													{{eventNewCrt.useremail}}
+												</div>
+												<div class="col-sm-4">
+													
+												</div>
+											</div>
+										</a>										
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row well well-sm">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="event_optionalMessage">Your Message</label>
+							<textarea id="event_optionalMessage"
+							rows="2"
+							name="optionalMessage" 
+							class="form-control" 							
+							ng-model="regCrt.event_optionalMessage">								
+							</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="row ">
+				<div class="col-sm-2 pull-right">
+					<input type="submit" class="btn btn-lg btn-default " value="Create Event">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
