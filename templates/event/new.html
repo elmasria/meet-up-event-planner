@@ -5,9 +5,9 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-sm-10 col-sm-offset-1">
-				<div class="alert alert-danger" ng-init="eventNewCrt.showError = false" ng-show="regCrt.showError">
+				<div id='div-error' class="alert alert-danger" ng-init="eventNewCrt.showError = false" ng-show="eventNewCrt.showError">
 					<span >
-						{{showError.errorMessage}}
+						{{eventNewCrt.errorMessage}}
 					</span>
 				</div>
 				<div class="row well well-sm">
@@ -199,17 +199,20 @@
 				<div class="row well well-sm">
 					<div class="col-sm-12">
 						<div class="form-group">
-							<label for="event_gestEmail">Gest Email</label>
+							<label for="event_guestEmail">Guest Email</label>
 							<input type="email"
-							id="event_gestEmail" 
+							id="event_guestEmail" 
 							name="email"
 							autocomplete="email" 
 							class="form-control"
 							placeholder="yourfriend@example.com"
 							required
-							ng-model="eventNewCrt.gestEmail"
+							ng-model="eventNewCrt.guestEmail"
 							>
-							<a href="#" ng-click="eventNewCrt.addNewGest(); eventNewCrt.preventEvent($event)"  class="btn btn-default">Add to List</a>
+							<a href="#" 
+							ng-click="eventNewCrt.addNewguest(); eventNewCrt.preventEvent($event)"  
+							class="btn btn-default"
+							ng-disabled="generalForm.email.$invalid">Add to List</a>
 						</div>
 					</div>
 					<div class="col-sm-12">
@@ -222,17 +225,20 @@
 					<div class="col-sm-12">
 						<div class="form-group">
 							<div class="listgroup">
-								<a href="#" ng-click="eventNewCrt.preventEvent($event)" ng-repeat="gest in eventNewCrt.Gests" class="list-group-item">
+								<a href="#" ng-click="eventNewCrt.preventEvent($event)" 
+								ng-repeat="guest in eventNewCrt.Guests" 
+								class="list-group-item"
+								ng-show="guest.isInvited">
 									<div class="row">
 										<div class="col-sm-1">
 											<img src="/images/Default_user_icon.png" class="img-responsive img-rounded" alt="Defalt user image">
 										</div>
 										<div class="col-sm-7">
-											{{gest.useremail}}
+											{{guest.useremail}}
 										</div>
 										<div class="col-sm-1 col-sm-offset-3">
 											<button type="button" 
-											ng-click="eventNewCrt.removeGest(gest); eventNewCrt.preventEvent($event)" 
+											ng-click="eventNewCrt.removeguest(guest); eventNewCrt.preventEvent($event)" 
 											ValidatorEnable="false"  
 											class="close" 
 											data-dismiss="modal">&times;</button>
@@ -253,15 +259,17 @@
 								</div>
 								<div class="modal-body">
 									<div class="list-group">
-										<a href="#" ng-click="eventNewCrt.toogleActive($event, inivitedGest); eventNewCrt.preventEvent($event)" 
+										<a href="#"  
 										class="list-group-item" 
-										ng-repeat="inivitedGest in eventNewCrt.listOfInvitedGests">
+										ng-repeat="inivitedGuest in eventNewCrt.listOfAvailableMembers"
+										ng-class="{active: inivitedGuest.isInvited}"
+										ng-click="inivitedGuest.isInvited= !inivitedGuest.isInvited; eventNewCrt.toogleActive(inivitedGuest) ;eventNewCrt.preventEvent($event)">
 											<div class="row">
 												<div class="col-sm-1">
 													<img src="/images/Default_user_icon.png" class="img-responsive img-rounded" alt="Defalt user image">
 												</div>
 												<div class="col-sm-7">
-													{{inivitedGest.useremail}}
+													{{inivitedGuest.useremail}}
 												</div>
 												<div class="col-sm-4">
 
@@ -271,7 +279,11 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" ng-click="eventNewCrt.addGestToList()" class="btn btn-default" data-dismiss="modal">Add to List</button>
+									<button type="button"
+									class="btn btn-default" 
+									data-dismiss="modal">
+									Done
+									</button>
 								</div>
 							</div>
 						</div>
