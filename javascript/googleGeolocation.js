@@ -38,6 +38,7 @@ function fillInAddress() {
     if (componentForm[addressType]) {
       var val = place.address_components[i][componentForm[addressType]];
       document.getElementById(addressType).value = val;
+      document.getElementById(addressType).focus();
     }
   }
 }

@@ -1,5 +1,7 @@
-angular.module('EventPlanner').controller('EventNewController', function ($filter) {
+angular.module('EventPlanner').controller('EventNewController', function ($filter, $resource) {
 	var controller = this;
+	var foursquareClientID = '&oauth_token=CRE2N2IININ300LAW02N4R5BCL3NP1X1A14JERVXK3B4KUBN&v=20151229';
+	var foursquareUrl = 'https://api.foursquare.com/v2/venues/search?near=';
 	controller.errorMessage = '';
 	controller.Guests = [];
 	controller.guestEmail = '';
@@ -11,6 +13,8 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	controller.preventEvent = function(event){
 		event.preventDefault();
 	};
+
+	/// --------------		Guest region		--------------///
 	controller.toogleActive = function (guest) {
 		var checkactive = !guest.isInvited ;
 		if (checkactive) {
@@ -64,4 +68,27 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			}
 		}
 	};
+	/// --------------		Guest region		--------------/// 
+
+	/// --------------		foursquare region		--------------///
+
+	controller.getListOfHosts = function (country) {
+		$resource(foursquareUrl + country + '&query='  + controller.eventType + foursquareClientID).get().$promise.then(function(data){
+			console.log(data.response.venues);
+		}).catch(function(errors){
+			console.log(errors.statusText);
+		}).finally(function () {
+			
+		});
+			
+	};
+
+	/// --------------		foursquare region		--------------///
+
+
+
+
+
+
+
 });

@@ -11,7 +11,7 @@
 					</span>
 				</div>
 				<div class="row well well-sm">
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<div class="form-group">
 							<label for="event_name">
 							Event Name
@@ -27,7 +27,7 @@
 							ng-model="eventNewCrt.eventName">
 						</div>	
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<div class="form-group">
 							<label for="event_type">
 							Event Type
@@ -46,19 +46,6 @@
 								<option value="wedding">
 							</datalist>
 						</div>	
-					</div>
-					<div class="col-sm-4">
-						<label for="event_Host">
-							Event host
-						</label>
-						<input type="text"
-						id="event_Host" 
-						name="eventHost"
-						autocomplete="eventHost" 
-						class="form-control"
-						placeholder="could be an individual’s name or an organization"
-						required
-						ng-model="eventNewCrt.eventHost">
 					</div>
 				</div>
 				<div class="row well well-sm">
@@ -102,7 +89,8 @@
 							class="form-control"
 							placeholder="Lebanon, Beirut"
 							required
-							ng-model="eventNewCrt.eventLocation">
+							ng-model="eventNewCrt.eventLocation"
+							>
 						</div>	
 					</div>
 					<div class="col-sm-4">
@@ -194,6 +182,20 @@
 							required
 							ng-model="eventNewCrt.country">
 						</div>
+					</div>
+					<div class="col-sm-4">
+						<label for="event_Host">
+							Event host
+						</label>
+						<input type="text"
+						id="event_Host" 
+						name="eventHost"
+						autocomplete="eventHost" 
+						class="form-control"
+						placeholder="could be an individual’s name or an organization"
+						required
+						ng-model="eventNewCrt.eventHost"
+						ng-focus='eventNewCrt.getListOfHosts(eventNewCrt.country)'>
 					</div>
 				</div>
 				<div class="row well well-sm">
