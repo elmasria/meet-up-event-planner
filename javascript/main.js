@@ -31,4 +31,19 @@ $(document).ready(function(){
 	$('#user_password').on('focus', function () {
 		$('#listOfErrors').fadeIn('slow');
 	});
+
+	$('#event_startDate').datepicker({
+		dateFormat: 'dd-M-yy',
+		showOtherMonths: true,
+		onSelect: function () {
+			var currentDate = $('#event_startDate').datepicker('getDate');
+			$('#event_endtDate').datepicker('option', 'minDate', new Date(currentDate));
+		}
+	});
+
+	$('#event_endtDate').datepicker({
+		dateFormat: 'dd-M-yy',
+		showOtherMonths: true
+	});
+	
 });

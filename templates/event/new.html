@@ -5,16 +5,52 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-sm-10 col-sm-offset-1">
-				<div id='div-error' class="alert alert-danger" ng-init="eventNewCrt.showError = false" ng-show="eventNewCrt.showError">
-					<span >
+				<div id='div-error' 
+				class="alert alert-danger" 
+				ng-init="eventNewCrt.showError = false" 
+				ng-show="eventNewCrt.showError">
+					<span>
 						{{eventNewCrt.errorMessage}}
 					</span>
-				</div>
-				<div class="row well well-sm">
+				</div>				
+				<nav class="row">
+					<ul class="nav nav-tabs nav-justified">
+						<li role="presentation" 
+						ng-class="{active: eventNewCrt.eventMainInformation}">
+							<a href="#" 
+							ng-click="eventNewCrt.preventEvent($event); eventNewCrt.eventMainInformation = true; eventNewCrt.eventLocationandHost = eventNewCrt.eventGuestsListandMessages = false;">
+							Event Main Information
+							</a>
+						</li>
+						<li  role="presentation"						
+						ng-class="{active: eventNewCrt.eventLocationandHost}">
+							<a href="#" 
+							ng-click="eventNewCrt.preventEvent($event); eventNewCrt.eventLocationandHost = true; eventNewCrt.eventMainInformation = eventNewCrt.eventGuestsListandMessages = false;">
+							Event Location and Host
+							</a>
+						</li>
+						<li  role="presentation"
+						ng-class="{active: eventNewCrt.eventGuestsListandMessages}">
+							<a href="#" 
+							ng-click="eventNewCrt.preventEvent($event); eventNewCrt.eventGuestsListandMessages = true; eventNewCrt.eventLocationandHost = eventNewCrt.eventMainInformation = false;">
+							Guest List and Message
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="row well well-sm" 
+				ng-init="eventNewCrt.eventMainInformation = true" 
+				ng-show="eventNewCrt.eventMainInformation">
 					<div class="col-sm-6">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventNameClassSuccess, 'has-error' : eventNewCrt.eventNameClassError}">
 							<label for="event_name">
-							Event Name
+							Event Name 
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter event name">
+							</i>
 							</label>
 							<input type="text" 
 							id="event_name" 
@@ -24,13 +60,26 @@
 							placeholder="Imagine cup"
 							autofocus
 							required
-							ng-model="eventNewCrt.eventName">
+							ng-keyup ="eventNewCrt.eventNameClassSuccess = generalForm.eventName.$valid; eventNewCrt.eventNameClassError = generalForm.eventName.$invalid"
+							ng-model="eventNewCrt.eventName"
+							aria-describedby="inputEventNameStatus">
+							<span class="glyphicon form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventNameClassSuccess, 'glyphicon-remove': eventNewCrt.eventNameClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventNameStatus" class="sr-only"
+							ng-bind="generalForm.eventName.$valid ? eventNewCrt.srResult = '(success)': eventNewCrt.srResult = '(error)'">({{eventNewCrt.srResult}})</span>
 						</div>	
 					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label for="event_type">
 							Event Type
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter event type">
+							</i>
 							</label>
 							<input list="eventTypeList" 
 							id="event_type" 
@@ -47,14 +96,12 @@
 							</datalist>
 						</div>	
 					</div>
-				</div>
-				<div class="row well well-sm">
-					<div class="col-sm-6">
+					<div class="col-sm-2">
 						<div class="form-group">
 							<label for="event_startDate">
-							Event Start Date
+								Event Start
 							</label>
-							<input type="datetime-local" 
+							<input type="text" 
 							id="event_startDate" 
 							name="eventStartDate"
 							class="form-control"
@@ -62,25 +109,100 @@
 							ng-model="eventNewCrt.eventStartDate">
 						</div>	
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="event_startHour">
+								Hour
+							</label>
+							<input type="number" 
+							id="event_startHour" 
+							name="eventStartHour"
+							class="form-control"
+							required
+							ng-model="eventNewCrt.eventStartHour"
+							min="0"
+							max="23">
+						</div>	
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="event_startMinute">
+								Minute
+							</label>
+							<input type="number" 
+							id="event_startMinute" 
+							name="eventStartMinute"
+							class="form-control"
+							required
+							ng-model="eventNewCrt.eventStartMinute"
+							min="0"
+							max="59">
+						</div>	
+					</div>
+					<div class="col-sm-2">
 						<div class="form-group">							
 							<label for="event_endtDate">
-							Event Start Date
+							Event End
 							</label>
-							<input type="datetime-local" 
+							<input type="text" 
+							min="{{eventNewCrt.eventStartDate}}"
 							id="event_endtDate" 
 							name="eventEndtDate"
 							class="form-control"
 							required
 							ng-model="eventNewCrt.eventEndtDate">
 						</div>	
-					</div>					
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="event_EndHour">
+								Hour
+							</label>
+							<input type="number" 
+							id="event_EndHour" 
+							name="eventEndHour"
+							class="form-control"
+							required
+							ng-model="eventNewCrt.eventEndHour"
+							min="0"
+							max="23">
+						</div>	
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="event_EndMinute">
+								Minute
+							</label>
+							<input type="number" 
+							id="event_EndMinute" 
+							name="eventEndMinute"
+							class="form-control"
+							required
+							ng-model="eventNewCrt.eventEndMinute"
+							min="0"
+							max="59">
+						</div>	
+					</div>
+					<div class="col-sm-12">
+						<a href="#" 
+						ng-click="eventNewCrt.preventEvent($event);eventNewCrt.eventLocationandHost = true; eventNewCrt.eventMainInformation = eventNewCrt.eventGuestsListandMessages = false;" 
+						class="btn btn-info btn-lg pull-right">
+						next
+						</a>
+					</div>		
 				</div>
-				<div class="row well well-sm">
+				<div class="row well well-sm"
+				ng-init="eventNewCrt.eventLocationandHost = false" 
+				ng-show="eventNewCrt.eventLocationandHost">
 					<div class="col-sm-4">
 						<div class="form-group">
 							<label for="event_Location">
-								Event Location
+							Event Location
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Event Location">
+							</i>
 							</label>
 							<input type="text"
 							id="event_Location" 
@@ -183,11 +305,16 @@
 							ng-model="eventNewCrt.country">
 						</div>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-8">
 						<label for="event_Host">
-							Event host
+							Event host								
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Event host">
+							</i>
 						</label>
-						<input type="text"
+						<input list="eventHostList"
 						id="event_Host" 
 						name="eventHost"
 						autocomplete="eventHost" 
@@ -195,34 +322,61 @@
 						placeholder="could be an individual’s name or an organization"
 						required
 						ng-model="eventNewCrt.eventHost"
-						ng-focus='eventNewCrt.getListOfHosts(eventNewCrt.country)'>
+						ng-focus='eventNewCrt.getListOfHosts()'>
+						<datalist id="eventHostList">
+						</datalist>
+					</div>
+					<div class="col-sm-12">
+						<a href="#" 
+						ng-click="eventNewCrt.preventEvent($event);eventNewCrt.eventMainInformation = true; eventNewCrt.eventLocationandHost = eventNewCrt.eventGuestsListandMessages = false;" 
+						class="btn btn-info btn-lg pull-left">
+						previous
+						</a>
+						<a href="#" 
+						ng-click="eventNewCrt.preventEvent($event);eventNewCrt.eventGuestsListandMessages = true; eventNewCrt.eventLocationandHost = eventNewCrt.eventMainInformation = false;" 
+						class="btn btn-info btn-lg pull-right">
+						next
+						</a>
 					</div>
 				</div>
-				<div class="row well well-sm">
+				<div class="row well well-sm"				
+				ng-init="eventNewCrt.eventGuestsListandMessages = false" 
+				ng-show="eventNewCrt.eventGuestsListandMessages">
 					<div class="col-sm-12">
 						<div class="form-group">
-							<label for="event_guestEmail">Guest Email</label>
-							<input type="email"
-							id="event_guestEmail" 
-							name="email"
-							autocomplete="email" 
-							class="form-control"
-							placeholder="yourfriend@example.com"
-							required
-							ng-model="eventNewCrt.guestEmail"
-							>
-							<a href="#" 
-							ng-click="eventNewCrt.addNewguest(); eventNewCrt.preventEvent($event)"  
-							class="btn btn-default"
-							ng-disabled="generalForm.email.$invalid">Add to List</a>
+							<label for="event_guestEmail">
+							Guest Email															
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Guest Email">
+							</i>
+							</label>
+							<div class="row">
+								<div class="col-sm-8">
+									<input type="email"
+									id="event_guestEmail" 
+									name="email"
+									autocomplete="email" 
+									class="form-control"
+									placeholder="yourfriend@example.com"
+									required
+									ng-model="eventNewCrt.guestEmail"
+									>
+								</div>
+								<div class="col-sm-2">
+									<a href="#" 
+									ng-click="eventNewCrt.addNewguest(); eventNewCrt.preventEvent($event)"  
+									class="btn btn-default"
+									ng-disabled="generalForm.email.$invalid">Add to List</a>
+								</div>
+								<div class="col-sm-2">
+									<a href="#" id="listOfUsers" ng-click="eventNewCrt.preventEvent($event)" class="btn btn-info"  data-toggle="modal" data-target="#myModal">
+									choose from list
+									</a>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-12">
-						<div class="form-group">
-							<a href="#" id="listOfUsers" ng-click="eventNewCrt.preventEvent($event)" class="btn btn-info pull-right"  data-toggle="modal" data-target="#myModal">
-								choose from list
-							</a>
-						</div>	
 					</div>
 					<div class="col-sm-12">
 						<div class="form-group">
@@ -291,10 +445,19 @@
 						</div>
 					</div>
 				</div>
-				<div class="row well well-sm">
+				<div class="row well well-sm"
+				ng-init="eventNewCrt.eventGuestsListandMessages = false" 
+				ng-show="eventNewCrt.eventGuestsListandMessages">
 					<div class="col-sm-12">
 						<div class="form-group">
-							<label for="event_optionalMessage">Your Message</label>
+							<label for="event_optionalMessage">
+							Your Message														
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Your Message">
+							</i>							
+							</label>
 							<textarea id="event_optionalMessage"
 							rows="2"
 							name="optionalMessage" 
@@ -303,13 +466,25 @@
 							</textarea>
 						</div>
 					</div>
+					<div class="col-sm-12">
+						<a href="#" 
+						ng-click="eventNewCrt.preventEvent($event);eventNewCrt.eventLocationandHost = true; eventNewCrt.eventMainInformation = eventNewCrt.eventGuestsListandMessages = false;"
+						class="btn btn-info btn-lg pull-left">
+						previous
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="panel-footer">
 			<div class="row ">
 				<div class="col-sm-2 pull-right">
-					<input type="submit" class="btn btn-lg btn-default " value="Create Event">
+					<input type="submit" 
+					class="btn btn-lg btn-default" 
+					value="Create Event"
+					ng-init="eventNewCrt.validateNewEventForm = true"
+					ng-disabled="eventNewCrt.validateNewEventForm"
+					>
 				</div>
 			</div>
 		</div>
@@ -319,3 +494,4 @@
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS1EF2hXm_4AllBuUh7RZtod8li9X9k6g&signed_in=true&libraries=places&callback=initAutocomplete" 
 async defer>
 </script>
+<script src="/javascript/main.js"></script>
