@@ -1,0 +1,25 @@
+{
+  "name": "meet-up-event-planner",
+  "version": "1.0.0",
+  "description": "Project at Udacity, part of Senior web developer nanodegree program. ",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp-sass": "^2.1.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elmasria/meet-up-event-planner.git"
+  },
+  "author": "Ahmad El Masri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elmasria/meet-up-event-planner/issues"
+  },
+  "homepage": "https://github.com/elmasria/meet-up-event-planner#readme"
+}
