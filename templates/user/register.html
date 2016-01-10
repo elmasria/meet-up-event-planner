@@ -24,15 +24,19 @@
 				<div class="row well well-sm">
 					<div class="col-md-3">
 						<div class="form-group has-feedback">
-							<label for="user_fname" class="">First Name</label>
+							<label for="user_fname" class="">
+							First Name
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your first name here">
+							</i>
+							</label>
 							<input type="text" 
 							id="user_fname" 
 							name="fname" 
 							autocomplete="fname" 
-							class="form-control" 
-							data-toggle="tooltip"
-							data-placement="auto" 
-							title="Please enter your first name here"
+							class="form-control"  
 							placeholder="Maud"
 							autofocus
 							required
@@ -49,15 +53,19 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group has-feedback">
-							<label for="user_lname" class="">Last Name</label>
+							<label for="user_lname" class="">
+							Last Name
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your last name here">
+							</i>
+							</label>
 							<input type="text" 
 							id="user_lname" 
 							name="lname" 
 							autocomplete="lname" 
 							class="form-control"  
-							data-toggle="tooltip"
-							data-placement="top" 
-							title="Please enter your last name here"
 							placeholder="Adams"
 							required
 							ng-model="regCrt.lname"
@@ -74,15 +82,19 @@
 					</div>			 
 					<div class="col-md-3">
 						<div class="form-group has-feedback">
-							<label for="user_email" class="">Email</label>
+							<label for="user_email" class="">
+							Email
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="name@example.com">
+							</i>
+							</label>
 							<input type="email" 
 							id="user_email" 
 							name="email" 
 							autocomplete="email" 
 							class="form-control"  
-							data-toggle="tooltip"
-							data-placement="top" 
-							title="name@example.com"
 							placeholder="name@example.com"
 							required
 							ng-model="regCrt.email"
@@ -125,38 +137,50 @@
 				<div class="row well well-sm">
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="user_dateOfBirth">Date of Birth</label>
+							<label for="user_dateOfBirth">
+							Date of Birth
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your Date of Birth">
+							</i>
+							</label>
 							<input type="date" 
 							id="user_dateOfBirth" 
 							name="BirthDay" 
 							class="form-control" 
-							data-toggle="tooltip"
-							data-placement="auto" 
-							title="Please enter your Date of Birth"
 							ng-model="regCrt.dateOfBirth">
 						</div>
 					</div>		
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="user_company">Company</label>
+							<label for="user_company">
+							Company
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your Company Name">
+							</i>
+							</label>
 							<input type="text" 
 							id="user_company"
 							class="form-control"
-							data-toggle="tooltip"
-							data-placement="auto" 
-							title="Please enter your Company Name"
 							ng-model="regCrt.companyName">
 						</div>
 					</div>	
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="user_country">Country</label>
+							<label for="user_country">
+							Country
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your Country">
+							</i>
+							</label>
 							<input type="text" 
 							id="user_country"
 							class="form-control"
-							data-toggle="tooltip"
-							data-placement="auto" 
-							title="Please enter your Country"
 							ng-model="regCrt.countryName">
 						</div>
 					</div>	
@@ -185,17 +209,21 @@
 						</div>	
 					</div>
 				</div>            
-				<div class="row well well-sm">				
+				<div class="row well well-sm">
 					<div class="col-sm-12">
 						<div class="form-group">
-							<label for="user_biography">Bio</label>
+							<label for="user_biography">
+							Bio
+							<i class="glyphicon glyphicon-info-sign"
+							data-toggle="tooltip"
+							data-placement="top" 
+							title="Please enter your biography">
+							</i>
+							</label>
 							<textarea rows="2"
 							id="user_biography" 
 							name="biography" 
 							class="form-control" 
-							data-toggle="tooltip"
-							data-placement="auto" 
-							title="Please enter your biography"
 							ng-model="regCrt.biography">
 						</textarea>
 					</div>
@@ -211,4 +239,7 @@
 		</div>			
 	</div>
 </div>
-<script src="/javascript/main.js"></script>
+<script>
+	checkTooltip();
+	passwordToogleListOfErrors();
+</script>

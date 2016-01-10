@@ -100,7 +100,53 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			});
 		}
 	};
-
 	/// --------------		foursquare region		--------------///
+
+
+	/// --------------		Validation region		--------------///
+
+	controller.validationProcess = function () {
+		var eventFormPassed = false; // this is a reference to check if all required input are valid
+		// define variables for all the required input based on the ng-model variable 
+		var eventFormPassedEventName = checkRequiredFiled(controller.eventName);
+		var eventFormPassedEventType = checkRequiredFiled(controller.eventType);
+		var eventFormPassedState = checkRequiredFiled(controller.State);
+		var eventFormPassedCountry = checkRequiredFiled(controller.country);
+		var eventFormPassedEventHost =  checkRequiredFiled(controller.eventHost);
+
+		// check if all required input are valid
+		if(eventFormPassedEventName && 
+			eventFormPassedEventType && 
+			eventFormPassedState && 
+			eventFormPassedCountry &&
+			eventFormPassedEventHost){
+			// all required input are valid
+			eventFormPassed = true;
+		}else{
+			// some or all input are invalid
+			eventFormPassed = false;
+		}
+
+
+		if (eventFormPassed) {
+			// form is valid ==> enable the submit button
+			controller.validateNewEventForm = false;
+		}else{
+			// form is invalid ==> disable the submit button
+			controller.validateNewEventForm = true;
+		}
+	};
+
+	var checkRequiredFiled =  function (controllerName) {
+		if (typeof (controllerName) !== 'undefined') {
+			// input has value ==> is valid
+			return true;
+		}else {
+			// input is empty ==> is invalid
+			return false;
+		}
+	};
+
+	/// --------------		Validation region		--------------///
 
 });

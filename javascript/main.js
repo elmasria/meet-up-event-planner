@@ -1,4 +1,4 @@
-$(document).ready(function(){
+function checkTooltip () {
 	var isMobile = {
 		Android: function() { 
 			return navigator.userAgent.match(/Android/i);
@@ -22,7 +22,12 @@ $(document).ready(function(){
 
 	if (!isMobile.any()){
 		$('[data-toggle="tooltip"]').tooltip();   
+	}else{
+		$('.glyphicon-info-sign').hide();
 	}
+}
+
+function passwordToogleListOfErrors(){	
 
 	$('#user_password').on('blur', function () {
 		$('#listOfErrors').fadeOut('slow');
@@ -30,8 +35,10 @@ $(document).ready(function(){
 
 	$('#user_password').on('focus', function () {
 		$('#listOfErrors').fadeIn('slow');
-	});
+	});		
+}
 
+function datePickerInitialization () {
 	$('#event_startDate').datepicker({
 		dateFormat: 'dd-M-yy',
 		showOtherMonths: true,
@@ -45,5 +52,4 @@ $(document).ready(function(){
 		dateFormat: 'dd-M-yy',
 		showOtherMonths: true
 	});
-	
-});
+}

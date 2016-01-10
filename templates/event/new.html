@@ -60,8 +60,9 @@
 							placeholder="Imagine cup"
 							autofocus
 							required
-							ng-keyup ="eventNewCrt.eventNameClassSuccess = generalForm.eventName.$valid; eventNewCrt.eventNameClassError = generalForm.eventName.$invalid"
 							ng-model="eventNewCrt.eventName"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventNameClassSuccess = generalForm.eventName.$valid; eventNewCrt.eventNameClassError = generalForm.eventName.$invalid"
 							aria-describedby="inputEventNameStatus">
 							<span class="glyphicon form-control-feedback"
 							ng-class="{'glyphicon-ok': eventNewCrt.eventNameClassSuccess, 'glyphicon-remove': eventNewCrt.eventNameClassError }" 
@@ -72,7 +73,8 @@
 						</div>	
 					</div>
 					<div class="col-sm-6">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventTypeClassSuccess, 'has-error' : eventNewCrt.eventTypeClassError}">
 							<label for="event_type">
 							Event Type
 							<i class="glyphicon glyphicon-info-sign"
@@ -88,12 +90,22 @@
 							class="form-control"							
 							placeholder="birthday party, conference talk, wedding, etc."
 							required
-							ng-model="eventNewCrt.eventType">
+							ng-model="eventNewCrt.eventType"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventTypeClassSuccess = generalForm.eventType.$valid; eventNewCrt.eventTypeClassError = generalForm.eventType.$invalid"
+							ng-blur ="eventNewCrt.eventTypeClassSuccess = generalForm.eventType.$valid; eventNewCrt.eventTypeClassError = generalForm.eventType.$invalid"
+							aria-describedby="inputEventTypeStatus">
 							<datalist id="eventTypeList">
 								<option value="Birthday party">
 								<option value="Conference talk">
 								<option value="wedding">
 							</datalist>
+							<span class="glyphicon form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventTypeClassSuccess, 'glyphicon-remove': eventNewCrt.eventTypeClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventTypeStatus" class="sr-only"
+							ng-bind="generalForm.eventType.$valid ? eventNewCrt.srResultEventType = '(success)': eventNewCrt.srResultEventType = '(error)'">({{eventNewCrt.srResultEventType}})</span>
 						</div>	
 					</div>
 					<div class="col-sm-2">
@@ -195,7 +207,8 @@
 				ng-init="eventNewCrt.eventLocationandHost = false" 
 				ng-show="eventNewCrt.eventLocationandHost">
 					<div class="col-sm-4">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventLocationClassSuccess, 'has-error' : eventNewCrt.eventLocationClassError}">
 							<label for="event_Location">
 							Event Location
 							<i class="glyphicon glyphicon-info-sign"
@@ -212,7 +225,14 @@
 							placeholder="Lebanon, Beirut"
 							required
 							ng-model="eventNewCrt.eventLocation"
-							>
+							ng-keyup ="eventNewCrt.eventLocationClassSuccess = generalForm.eventLocation.$valid; eventNewCrt.eventLocationClassError = generalForm.eventLocation.$invalid"
+							aria-describedby="inputEventLocationStatus">
+							<span class="glyphicon form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventLocationClassSuccess, 'glyphicon-remove': eventNewCrt.eventLocationClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventLocationStatus" class="sr-only"
+							ng-bind="generalForm.eventLocation.$valid ? eventNewCrt.srResultEventLocation = '(success)': eventNewCrt.srResultEventLocation = '(error)'">({{eventNewCrt.srResultEventLocation}})</span>
 						</div>	
 					</div>
 					<div class="col-sm-4">
@@ -226,7 +246,6 @@
 							autocomplete="streetnumber" 
 							class="form-control"
 							placeholder="75"
-							required
 							ng-model="eventNewCrt.street_number">
 						</div>
 					</div>
@@ -241,7 +260,6 @@
 							autocomplete="route" 
 							class="form-control"
 							placeholder="Nicolas Chorier"
-							required
 							ng-model="eventNewCrt.route">
 						</div>	
 					</div>
@@ -256,7 +274,6 @@
 							autocomplete="locality" 
 							class="form-control"
 							placeholder="Grenoble"
-							required
 							ng-model="eventNewCrt.locality">
 						</div>
 					</div>
@@ -272,7 +289,8 @@
 							class="form-control"
 							placeholder="Grenoble"
 							required
-							ng-model="eventNewCrt.State">
+							ng-model="eventNewCrt.State"
+							ng-change="eventNewCrt.validationProcess()">
 						</div>
 					</div>
 					<div class="col-sm-4">
@@ -286,7 +304,6 @@
 							autocomplete="postal_code" 
 							class="form-control"
 							placeholder="38000"
-							required
 							ng-model="eventNewCrt.postal_code">
 						</div>
 					</div>
@@ -302,7 +319,8 @@
 							class="form-control"
 							placeholder="France"
 							required
-							ng-model="eventNewCrt.country">
+							ng-model="eventNewCrt.country"
+							ng-change="eventNewCrt.validationProcess()">
 						</div>
 					</div>
 					<div class="col-sm-8">
@@ -322,7 +340,8 @@
 						placeholder="could be an individual’s name or an organization"
 						required
 						ng-model="eventNewCrt.eventHost"
-						ng-focus='eventNewCrt.getListOfHosts()'>
+						ng-focus="eventNewCrt.getListOfHosts()"
+						ng-change="eventNewCrt.validationProcess()">
 						<datalist id="eventHostList">
 						</datalist>
 					</div>
@@ -365,10 +384,10 @@
 									>
 								</div>
 								<div class="col-sm-2">
-									<a href="#" 
+									<button type="button"  
 									ng-click="eventNewCrt.addNewguest(); eventNewCrt.preventEvent($event)"  
 									class="btn btn-default"
-									ng-disabled="generalForm.email.$invalid">Add to List</a>
+									ng-disabled="generalForm.email.$invalid">Add to List</button>
 								</div>
 								<div class="col-sm-2">
 									<a href="#" id="listOfUsers" ng-click="eventNewCrt.preventEvent($event)" class="btn btn-info"  data-toggle="modal" data-target="#myModal">
@@ -494,4 +513,7 @@
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS1EF2hXm_4AllBuUh7RZtod8li9X9k6g&signed_in=true&libraries=places&callback=initAutocomplete" 
 async defer>
 </script>
-<script src="/javascript/main.js"></script>
+<script>
+	checkTooltip();
+	datePickerInitialization();
+</script>
