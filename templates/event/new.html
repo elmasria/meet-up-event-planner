@@ -481,7 +481,7 @@
 							rows="2"
 							name="optionalMessage" 
 							class="form-control" 							
-							ng-model="regCrt.event_optionalMessage">								
+							ng-model="eventNewCrt.event_optionalMessage">								
 							</textarea>
 						</div>
 					</div>
@@ -503,17 +503,16 @@
 					value="Create Event"
 					ng-init="eventNewCrt.validateNewEventForm = true"
 					ng-disabled="eventNewCrt.validateNewEventForm"
-					>
+					ng-click="eventNewCrt.addNewEvent()">
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<script 
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS1EF2hXm_4AllBuUh7RZtod8li9X9k6g&signed_in=true&libraries=places&callback=initAutocomplete" 
-async defer>
-</script>
 <script>
 	checkTooltip();
 	datePickerInitialization();
+</script>
+<script 
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS1EF2hXm_4AllBuUh7RZtod8li9X9k6g&signed_in=true&libraries=places&callback=initAutocomplete" async defer>
 </script>

@@ -1,4 +1,4 @@
-angular.module('EventPlanner').controller('EventNewController', function ($filter, $resource) {
+angular.module('EventPlanner').controller('EventNewController', function ($filter, $resource, $location) {
 	var controller = this;
 	var foursquareClientID = '&oauth_token=CRE2N2IININ300LAW02N4R5BCL3NP1X1A14JERVXK3B4KUBN&v=20151229';
 	var foursquareUrl = 'https://api.foursquare.com/v2/venues/search?near=';
@@ -148,5 +148,59 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	};
 
 	/// --------------		Validation region		--------------///
+
+
+	/// --------------		Save Event region		--------------///
+
+	controller.addNewEvent = function(){
+		angular.element($('#event_Location')).triggerHandler('input');
+		var jsondata ;
+		if(localStorage.getItem('EventPlanerDB')) {
+			jsondata = JSON.parse(localStorage.getItem('EventPlanerDB'));
+		}else{
+			jsondata = {'users': [],'events': [], 'loggedInUser':''};
+		}
+		var newEvent = {};
+		newEvent.eventName=controller.eventName;
+		newEvent.eventType=controller.eventType ;
+		newEvent.eventStartDate={};
+		newEvent.eventStartDate.eventStartDate = controller.eventStartDate ;
+		newEvent.eventStartDate.eventStartHour =  controller.eventStartHour ;
+		newEvent.eventStartDate.eventStartMinute =  controller.eventStartMinute;
+		newEvent.eventEndtDate = {};
+		newEvent.eventEndtDate.eventEndtDate = controller.eventEndtDate ;
+		newEvent.eventEndtDate.eventEndHour =  controller.eventEndHour ;
+		newEvent.eventEndtDate.eventSEndMinute =  controller.eventEndMinute;
+		newEvent.eventLocation={};
+		newEvent.eventLocation.eventLocation = controller.eventLocation;
+		newEvent.eventLocation.street_number = controller.street_number;
+		newEvent.eventLocation.route = controller.route;
+		newEvent.eventLocation.locality = controller.locality;
+		newEvent.eventLocation.State = controller.State;
+		newEvent.eventLocation.postal_code = controller.postal_code;
+		newEvent.eventLocation.country = controller.country;
+		newEvent.eventLocation.eventHost= controller.eventHost; 
+		newEvent.eventGuestList=controller.Guests;
+		newEvent.eventMessage=controller.event_optionalMessage;
+		var existingEvent = [];
+		for (var i = 0; i < jsondata.events.length; i++) {
+			existingEvent.push(jsondata.events[i].eventName);
+		}
+		var eventExist = $filter('filter')(existingEvent, controller.eventName);
+		if (eventExist.length > 0) {
+			controller.errorMessage = controller.eventName + ' already exist !';
+			controller.showError = true;
+			$('html,body').animate({scrollTop:0},'slow');
+		}
+		else{
+			controller.errorMessage = '';
+			controller.showError = false;
+			jsondata.events.push(newEvent);
+			localStorage.setItem('EventPlanerDB',JSON.stringify(jsondata));
+			$location.path('/home');
+		}
+	};
+
+	/// --------------		Save Event region		--------------///
 
 });

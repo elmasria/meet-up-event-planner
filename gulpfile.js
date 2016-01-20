@@ -12,7 +12,7 @@ var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var sourcemap = require('gulp-sourcemaps');
 
-gulp.task('default', [], function(){
+gulp.task('default', ['dist'], function(){
 
 });
 
