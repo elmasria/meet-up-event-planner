@@ -82,6 +82,7 @@ gulp.task('server', function(){
 	gulp.watch('sass/**/*.scss',['styles']);
 	gulp.watch('javascript/**/*.js', ['scripts-dist']);
 	gulp.watch('/index.html', ['copy-html']);
+	gulp.watch('./templates/**/*.html', ['copy-html']);
 });
 
 gulp.task('lint', function(){
