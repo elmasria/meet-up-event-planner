@@ -60,7 +60,10 @@ gulp.task('styles', function () {
 });
 
 gulp.task('scripts-dist', function(){
-	gulp.src('javascript/**/*.js')
+	gulp.src(['vendors/angular/angular.js',
+		'vendors/angular/angular-route.js',
+		'vendors/angular/angular-resource.js',
+		'javascript/**/*.js'])
 	.pipe(sourcemap.init())
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest('dist/javascript'))

@@ -1,6 +1,9 @@
 <div ng-controller="EventShowController as eventShowCrt">	
 	<div class="container">
-		<div class="row">
+	<div class="alert alert-warning" ng-if="eventShowCrt.events.length === 0">
+		No events Available
+	</div>
+		<div class="row" ng-show="eventShowCrt.events.length !== 0">
 			<div class="col-md-3 ">
 				<nav>
 					<div class="input-group">							
@@ -10,10 +13,10 @@
 					<br>
 					<h6>Categories</h6>
 					<div class="list-group">
-						<a href="#" ng-click="eventShowCrt.preventEvent($event); eventShowCrt.filterEventType('all')" class="list-group-item active">
+						<a href="#" ng-click="eventShowCrt.preventEvent($event); eventShowCrt.filterEventType('all', $event)" class="list-group-item active">
 							All Types
 						</a>
-						<a href="#" ng-click="eventShowCrt.preventEvent($event);eventShowCrt.filterEventType(eventType)" class="list-group-item" ng-repeat="eventType in eventShowCrt.eventTypes">
+						<a href="#" ng-click="eventShowCrt.preventEvent($event);eventShowCrt.filterEventType(eventType, $event)" class="list-group-item" ng-repeat="eventType in eventShowCrt.eventTypes">
 							{{eventType}}
 						</a>
 					</div>
@@ -23,46 +26,38 @@
 				<div class="row" >
 					<div class="col-sm-6" ng-repeat="event in eventShowCrt.events | filter: eventShowCrt.search" >
 						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h1>{{event.eventName}}</h1>
-							</div>
-							<div class="plan-body">
-								<div class="row">
-									<div class="col-sm-12">
-										<h4>Location</h4>
-										{{event.eventLocation.eventLocation}}
-									</div>
+							<div class="panel-heading" role="button" data-toggle="modal" 
+							ng-click="eventShowCrt.preventEvent($event);eventShowCrt.showMoreDetails(event)" data-target="#myModal"
+							title="Click for more Details">
+							<h1>{{event.eventName}}</h1>
+						</div>
+						<div class="plan-body">
+							<div class="row">
+								<div class="col-sm-10 col-sm-offset-1">
+									<h4>Location</h4>
+									{{event.eventLocation.eventLocation}}
 								</div>
-								<br>
-								<div class="row">
-									<div class="col-sm-12">
-
-										<button type="button" class="btn btn-lg btn-default pull-right"
-										data-toggle="modal" 
-										ng-click="eventShowCrt.preventEvent($event);eventShowCrt.showMoreDetails(event)" data-target="#myModal"> More Details</button>
-									</div>
-								</div>	
 							</div>
-							<div class="panel-footer">
-								<div class="row">
-									<div class="col-sm-6">
-										From: 
-										{{event.eventStartDate.eventStartDate}}
-									</div>
-									<div class="col-sm-6">
-										To: 
-										{{event.eventEndtDate.eventEndtDate}}
-									</div>						
+							<br>	
+						</div>
+						<div class="panel-footer">
+							<div class="row">
+								<div class="col-sm-6">
+									From: 
+									{{event.eventStartDate.eventStartDate}}
 								</div>
+								<div class="col-sm-6">
+									To: 
+									{{event.eventEndtDate.eventEndtDate}}
+								</div>						
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>	
-	</div>
+		</div>
+	</div>	
 </div>
-
 <!-- Modal -->
 <div id="myModal" class="modal fade " role="dialog">
 	<div class="modal-dialog modal-lg">
@@ -70,16 +65,71 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" ng-click="eventShowCrt.preventEvent($event)" ValidatorEnable="false"  class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title"></h4>
+				<h4 class="modal-title">
+				{{eventShowCrt.singleEvent.eventName}},  at {{eventShowCrt.singleEvent.eventLocation.eventHost}}</h4>
+				<h5> 
+				{{
+				eventShowCrt.singleEvent.eventLocation.hasOwnProperty('street_number') ? (
+				eventShowCrt.singleEvent.eventLocation.street_number + ','): ''
+				}}
+				
+				{{
+					eventShowCrt.singleEvent.eventLocation.hasOwnProperty('route') ? (
+					eventShowCrt.singleEvent.eventLocation.route +','):''
+				}} 
+				
+				{{
+					eventShowCrt.singleEvent.eventLocation.hasOwnProperty('locality') ? (
+					eventShowCrt.singleEvent.eventLocation.locality + ','): ''
+				}}
+				
+				{{
+					eventShowCrt.singleEvent.eventLocation.hasOwnProperty('postal_code') ? (
+					eventShowCrt.singleEvent.eventLocation.postal_code +','):''
+				}} 
+				
+				{{
+					eventShowCrt.singleEvent.eventLocation.hasOwnProperty('State') ? (
+					eventShowCrt.singleEvent.eventLocation.State + ',') : ''
+				}} 
+				
+				{{
+					eventShowCrt.singleEvent.eventLocation.country 
+				}} 
+				</h5>
 			</div>
 			<div class="modal-body">
-				
-					{{eventShowCrt.singleEvent.eventName}}
-				
+				<h5 >
+					<span class="label label-info"> {{eventShowCrt.singleEvent.eventType}}
+					</span>
+				</h5>
+					<br>
+				<p>
+					{{eventShowCrt.singleEvent.eventMessage}}
+					<div class="alert alert-info" ng-if="!eventShowCrt.singleEvent.hasOwnProperty('eventMessage')">
+						No message Available
+					</div>
+				</p>
+			<h5 ng-show="eventShowCrt.singleEvent.eventGuestList.length >0">
+				<span class="label label-info"> Guests
+				</span>
+			</h5>
+			<table class="table table-inverse" >
+				<tbody>
+					<tr>
+						<td ng-repeat="guest in eventShowCrt.singleEvent.eventGuestList">
+							{{guest.useremail}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			</div>
 			<div class="modal-footer">
-				
+				From: {{eventShowCrt.singleEvent.eventStartDate.eventStartDate}} {{eventShowCrt.singleEvent.eventStartDate.eventStartHour +':'+ eventShowCrt.singleEvent.eventStartDate.eventStartMinute}}
+				&nbsp; &nbsp;To: {{eventShowCrt.singleEvent.eventEndtDate.eventEndtDate}} {{eventShowCrt.singleEvent.eventEndtDate.eventEndHour +':'+ eventShowCrt.singleEvent.eventEndtDate.eventSEndMinute}}
 			</div>
 		</div>
 	</div>
+</div>
+
 </div>

@@ -54,10 +54,5 @@ function datePickerInitialization () {
 		showOtherMonths: true
 	});
 }
-/*
-$( document ).ready(function() {   
-	$('#event_Location').blur(function(){
-		angular.element($('#event_Location')).triggerHandler('input');
-	});
-});
-*/
+
+
