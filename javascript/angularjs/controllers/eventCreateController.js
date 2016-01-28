@@ -7,16 +7,35 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	controller.errorMessage = '';
 	controller.Guests = [];
 	controller.guestEmail = '';
-	controller.listOfAvailableMembers = [
-	{'useremail':'ahmad@ahmad.com', 'isInvited': false, 'isMember': true},
-	{'useremail':'ranim@ranim.com', 'isInvited': false,'isMember': true},
-	{'useremail':'farah@farah.com', 'isInvited': false, 'isMember': true}
-	];
+	controller.listOfAvailableMembers = [];
+
+
 	controller.preventEvent = function(event){
 		event.preventDefault();
 	};
-
+	
 	/// --------------		Guest region		--------------///
+	var dataBase ;
+	if(localStorage.getItem('EventPlanerDB')) {
+		dataBase = JSON.parse(localStorage.getItem('EventPlanerDB'));
+	}else{
+		dataBase = {'users': [],'events': [], 'loggedInUser':''};
+	}
+	var existingEmail = [];
+	for (var i = 0; i < dataBase.users.length; i++) {
+		var objEmail = {};
+		objEmail.useremail = JSON.parse(dataBase.users[i]).email;
+		objEmail.isInvited = false;
+		objEmail.isMember = true;
+		existingEmail.push(objEmail);
+	}
+	if (existingEmail.length <=0) {
+		controller.noUsers = true;
+	}else{
+
+		controller.listOfAvailableMembers = existingEmail;
+	}
+
 	controller.toogleActive = function (guest) {
 		var checkactive = !guest.isInvited ;
 		if (checkactive) {
