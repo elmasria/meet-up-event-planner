@@ -44,6 +44,23 @@ function passwordToogleListOfErrors(){
 	$('#user_email').on('focus', function () {
 		$('#listOfEmailErrors').fadeIn('slow');
 	});	
+
+	$('#event_startDate').on('blur', function () {
+		$('#listOfStartDateErrors').fadeOut('slow');
+	});
+
+	$('#event_startDate').on('focus', function () {
+		$('#listOfStartDateErrors').fadeIn('slow');
+	});	
+
+	$('#event_endtDate').on('blur', function () {
+		$('#listOfEndDateErrors').fadeOut('slow');
+	});
+
+	$('#event_endtDate').on('focus', function () {
+		$('#listOfEndDateErrors').fadeIn('slow');
+	});	
+
 }
 
 

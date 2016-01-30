@@ -48,6 +48,7 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			controller.Guests.push(guest);			
 		}
 	};
+
 	controller.removeguest = function (guest) {
 		if (typeof(guest.useremail) !== 'undefined') {
 			if (controller.Guests.indexOf(guest) > -1) {
@@ -58,6 +59,7 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			}
 		}
 	};
+
 	controller.addNewguest = function () {
 		controller.showError = false;
 		var listOfInvitedGuest = controller.Guests;
@@ -99,12 +101,11 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		}
 	};
 
-
 	controller.checkGuestEmail = function () {
 		checkEmail(controller.guestEmail);
 	};
 
-	function checkEmail(currentValue) {		
+	function checkEmail(currentValue) {
 		if(typeof (currentValue) !== 'undefined'){
 			if (!currentValue.match(CheckemailValidation) ) {
 				currentValue.indexOf('@') > -1 ? controller.emailErrorMessage = ['Please enter a valid email address']:
@@ -126,7 +127,7 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 
 	/// --------------		foursquare region		--------------///
 
-	controller.getListOfHosts = function () {		
+	controller.getListOfHosts = function () {
 		var dataListElement = document.getElementById('eventHostList');
 		var options = '';
 		var nearPlace = typeof(controller.locality) !== 'undefined'? controller.locality : typeof(controller.State) !== 'undefined'? controller.State : controller.country;
@@ -161,11 +162,11 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	controller.validationProcess = function () {
 		var eventFormPassed = false; // this is a reference to check if all required input are valid
 		// define variables for all the required input based on the ng-model variable 
-		var eventFormPassedEventName = checkRequiredFiled(controller.eventName, false);
-		var eventFormPassedEventType = checkRequiredFiled(controller.eventType, false);
-		var eventFormPassedEventHost =  checkRequiredFiled(controller.eventHost, false);
-		var eventFormPassedEventStratDate = checkRequiredFiled(controller.eventStartDate, true);
-		var eventFormPassedEventEndDate = checkRequiredFiled(controller.eventEndtDate, true);
+		var eventFormPassedEventName = checkRequiredFiled(controller.eventName, false,false,false);
+		var eventFormPassedEventType = checkRequiredFiled(controller.eventType, false, false, false);
+		var eventFormPassedEventHost =  checkRequiredFiled(controller.eventHost, false, false, false);
+		var eventFormPassedEventStratDate = checkRequiredFiled(controller.eventStartDate, true, true, false);
+		var eventFormPassedEventEndDate = checkRequiredFiled(controller.eventEndtDate, true, false, true);
 
 		// check if all required input are valid
 		if(eventFormPassedEventName && 
@@ -189,12 +190,14 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		}
 	};
 
-	var checkRequiredFiled =  function (controllerName, isDate) {		
+	var checkRequiredFiled =  function (controllerName, isDate, isStartDate, isEndDate) {		
 		if (typeof (controllerName) !== 'undefined') {
 				// check if date 
 				if(isDate){
 					var validDate = new Date(controllerName);
 					if(validDate instanceof Date ){
+						isStartDate? controller.errorStartDateMessage = []: '';
+						isEndDate?controller.errorEndDateMessage = []: '';
 						return true;
 					}else{
 						return false;
@@ -204,8 +207,15 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 				return true;
 			}
 		}else {
-				// input is empty ==> is invalid
-				return false;
+				if(isDate && isStartDate){
+					// Date should be equal and greater than curent date
+					controller.errorStartDateMessage = ['Date should be greater than current date'];					
+				}else if(isDate && isEndDate){
+					controller.errorEndDateMessage = ['End date should be greater than start date'];
+				}else{
+					// input is empty ==> is invalid
+					return false;
+				}
 			}
 		};
 

@@ -123,8 +123,8 @@
 							required
 							ng-model="eventNewCrt.eventStartDate"
 							ng-change="eventNewCrt.validationProcess()"
-							ng-keyup ="eventNewCrt.eventStartDateClassSuccess = generalForm.eventStartDate.$valid; eventNewCrt.eventstartDateClassError = generalForm.eventStartDate.$invalid"
-							ng-blur ="eventNewCrt.eventStartDateClassSuccess = generalForm.eventStartDate.$valid; eventNewCrt.eventstartDateClassError = generalForm.eventStartDate.$invalid"
+							ng-keyup ="eventNewCrt.validationProcess(); eventNewCrt.eventStartDateClassSuccess = generalForm.eventStartDate.$valid; eventNewCrt.eventstartDateClassError = generalForm.eventStartDate.$invalid"
+							ng-blur ="eventNewCrt.validationProcess(); eventNewCrt.eventStartDateClassSuccess = generalForm.eventStartDate.$valid; eventNewCrt.eventstartDateClassError = generalForm.eventStartDate.$invalid ;eventNewCrt.eventEndtDateClassSuccess = generalForm.eventEndtDate.$valid; eventNewCrt.eventEndtDateClassError = generalForm.eventEndtDate.$invalid"
 							aria-describedby="inputEventtartDateStatus">
 							<span class="glyphicon glyphicon-asterisk form-control-feedback"
 							ng-class="{'glyphicon-ok': eventNewCrt.eventStartDateClassSuccess, 'glyphicon-remove': eventNewCrt.eventstartDateClassError }" 
@@ -132,6 +132,9 @@
 							</span>
 							<span id="inputEventtartDateStatus" class="sr-only"
 							ng-bind="generalForm.eventStartDate.$valid ? eventNewCrt.srResultEventstartDate = '(success)': eventNewCrt.srResultEventstartDate = '(error)'">({{eventNewCrt.srResultEventstartDate}})</span>
+							<ul id="listOfStartDateErrors" class="list-group" style="display: none;" >
+								<li ng-repeat="error in eventNewCrt.errorStartDateMessage" class="list-group-item list-group-item-danger">{{error}}</li>
+							</ul>
 						</div>	
 					</div>
 					<div class="col-sm-6">
@@ -149,7 +152,7 @@
 							ng-model="eventNewCrt.eventEndtDate"
 							ng-change="eventNewCrt.validationProcess()"
 							ng-keyup ="eventNewCrt.eventEndtDateClassSuccess = generalForm.eventEndtDate.$valid; eventNewCrt.eventEndtDateClassError = generalForm.eventEndtDate.$invalid"
-							ng-blur ="eventNewCrt.eventEndtDateClassSuccess = generalForm.eventEndtDate.$valid; eventNewCrt.eventEndtDateClassError = generalForm.eventEndtDate.$invalid"
+							ng-blur ="eventNewCrt.validationProcess(); eventNewCrt.eventEndtDateClassSuccess = generalForm.eventEndtDate.$valid; eventNewCrt.eventEndtDateClassError = generalForm.eventEndtDate.$invalid"
 							aria-describedby="inputEventEndtDateStatus">
 							<span class="glyphicon glyphicon-asterisk form-control-feedback"
 							ng-class="{'glyphicon-ok': eventNewCrt.eventEndtDateClassSuccess, 'glyphicon-remove': eventNewCrt.eventEndtDateClassError }" 
@@ -157,6 +160,9 @@
 							</span>
 							<span id="inputEventEndtDateStatus" class="sr-only"
 							ng-bind="generalForm.eventEndtDate.$valid ? eventNewCrt.srResultEventEndtDate = '(success)': eventNewCrt.srResultEventEndtDate = '(error)'">({{eventNewCrt.srResultEventEndtDate}})</span>
+							<ul id="listOfEndDateErrors" class="list-group" style="display: none;" >
+								<li ng-repeat="error in eventNewCrt.errorEndDateMessage" class="list-group-item list-group-item-danger">{{error}}</li>
+							</ul>
 						</div>	
 					</div>
 					<div class="col-sm-12">
@@ -481,6 +487,7 @@
 </div>
 <script>
 	checkTooltip();
+	passwordToogleListOfErrors();
 </script>
 <script 
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS1EF2hXm_4AllBuUh7RZtod8li9X9k6g&signed_in=true&libraries=places&callback=initAutocomplete" async defer>
