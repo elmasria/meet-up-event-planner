@@ -28,7 +28,7 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	var existingEmail = [];
 	for (var i = 0; i < dataBase.users.length; i++) {
 		var objEmail = {};
-		objEmail.useremail = JSON.parse(dataBase.users[i]).email;
+		objEmail.useremail = dataBase.users[i].email;
 		objEmail.isInvited = false;
 		objEmail.isMember = true;
 		existingEmail.push(objEmail);
