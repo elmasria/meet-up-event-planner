@@ -83,10 +83,14 @@ angular.module('EventPlanner').controller('RegistrationController', function ($f
             if (!detectPreviousProgress && !AllowedToPass) {
                 controller.progressPercent -= 25;
                 ErrorOccured(event, true);
+            }else if(!AllowedToPass){
+                ErrorOccured(event, true);                
             }
         } else {
             if (currentValueLength === 0 && !detectPreviousProgress && AllowedToPass) {
                 controller.progressPercent -= 25;
+                ErrorOccured(event, true);
+            }else if(currentValueLength === 0){
                 ErrorOccured(event, true);
             }
         }
@@ -95,8 +99,14 @@ angular.module('EventPlanner').controller('RegistrationController', function ($f
 
     var checkEmail = function (currentValue) {
         if (!currentValue.match(CheckemailValidation)) {
+            currentValue.indexOf('@') > -1 ? controller.emailErrorMessage = ['Please enter a valid email address']:
+            controller.emailErrorMessage = [
+            'Please enter a valid email address', 
+            'A valid email should contain the symbol "@"'
+            ];
             return false;
-        } else {
+        } else {            
+            controller.emailErrorMessage = [];
             return true;
         }
     };

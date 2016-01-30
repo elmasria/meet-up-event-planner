@@ -45,7 +45,7 @@
 							ng-change="regCrt.validationProcess()"
 							ng-blur="regCrt.checkProgressBar($event)"
 							aria-describedby="inputFnameStatus">						
-							<span class="glyphicon form-control-feedback" 
+							<span class="glyphicon glyphicon-asterisk form-control-feedback" 
 							aria-hidden="true"></span>
 							<span id="inputFnameStatus" 
 							class="sr-only"></span>
@@ -74,7 +74,7 @@
 							ng-blur="regCrt.checkProgressBar($event)"
 
 							aria-describedby="inputLnameStatus">						
-							<span class="glyphicon form-control-feedback" 
+							<span class="glyphicon glyphicon-asterisk  form-control-feedback" 
 							aria-hidden="true"></span>
 							<span id="inputLnameStatus" 
 							class="sr-only"></span>
@@ -84,7 +84,7 @@
 						<div class="form-group has-feedback">
 							<label for="user_email" class="">
 							Email
-							<i class="glyphicon glyphicon-info-sign"
+							<i class="glyphicon  glyphicon-info-sign"
 							data-toggle="tooltip"
 							data-placement="top" 
 							title="name@example.com">
@@ -101,12 +101,14 @@
 							ng-keyup = "regCrt.checkProgressBar($event, 0, 1)"
 							ng-change="regCrt.validationProcess()"
 							ng-blur="regCrt.checkProgressBar($event, 0, 1)"
-
 							aria-describedby="inputEmailStatus">						
-							<span class="glyphicon form-control-feedback" 
+							<span class="glyphicon glyphicon-asterisk form-control-feedback" 
 							aria-hidden="true"></span>
 							<span id="inputEmailStatus" 
 							class="sr-only"></span>
+							<ul id="listOfEmailErrors" class="list-group" >
+								<li ng-repeat="error in regCrt.emailErrorMessage" class="list-group-item list-group-item-danger">{{error}}</li>
+							</ul>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -124,7 +126,7 @@
 							ng-change="regCrt.validationProcess()"
 							ng-blur="regCrt.checkProgressBar($event, 1, 0)"						
 							aria-describedby="inputPasswordStatus">						
-							<span class="glyphicon form-control-feedback" 
+							<span class="glyphicon glyphicon-asterisk  form-control-feedback" 
 							aria-hidden="true"></span>
 							<span id="inputPasswordStatus" 
 							class="sr-only"></span>

@@ -1,4 +1,4 @@
-#listOfErrors {
+#listOfErrors, #listOfEmailErrors {
 	position: absolute;
 	z-index: 100;
 }
@@ -9,3 +9,6 @@
 	cursor:help;
 }
 
+.glyphicon-asterisk {
+  color:#a94442;
+}

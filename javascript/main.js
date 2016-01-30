@@ -36,23 +36,16 @@ function passwordToogleListOfErrors(){
 	$('#user_password').on('focus', function () {
 		$('#listOfErrors').fadeIn('slow');
 	});		
-}
 
-function datePickerInitialization () {
-	$('#event_startDate').datepicker({
-		dateFormat: 'dd-M-yy',
-		showOtherMonths: true,
-		onSelect: function () {
-			var currentDate = $('#event_startDate').datepicker('getDate');
-			$('#event_endtDate').datepicker('option', 'minDate', new Date(currentDate));
-			angular.element($('#event_startDate')).triggerHandler('input');
-		}
+	$('#user_email').on('blur', function () {
+		$('#listOfEmailErrors').fadeOut('slow');
 	});
 
-	$('#event_endtDate').datepicker({
-		dateFormat: 'dd-M-yy',
-		showOtherMonths: true
-	});
+	$('#user_email').on('focus', function () {
+		$('#listOfEmailErrors').fadeIn('slow');
+	});	
 }
+
+
 
 

@@ -2,12 +2,16 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	var controller = this;
 	var foursquareClientID = '&oauth_token=CRE2N2IININ300LAW02N4R5BCL3NP1X1A14JERVXK3B4KUBN&v=20151229';
 	var foursquareUrl = 'https://api.foursquare.com/v2/venues/search?near=';
+	// Below regular expression, used to validate an email address. REFERENCE: http://emailregex.com/
+    var CheckemailValidation = new RegExp(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i);
+
 	controller.validateNewEventForm = true;
 	controller.progressPercent = 100;
 	controller.errorMessage = '';
 	controller.Guests = [];
 	controller.guestEmail = '';
 	controller.listOfAvailableMembers = [];
+	controller.nowDate = new Date(Date.now());
 
 
 	controller.preventEvent = function(event){
@@ -58,7 +62,13 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		controller.showError = false;
 		var listOfInvitedGuest = controller.Guests;
 		var listOfAvailableMembers = controller.listOfAvailableMembers;
-		var inputGuestEmail = controller.guestEmail;
+		var inputGuestEmail;
+		var trueEmail = checkEmail(controller.guestEmail);
+		if (trueEmail) {
+			inputGuestEmail = controller.guestEmail;
+		}else{
+			return;
+		}
 		var existingMember = $filter('filter')(listOfAvailableMembers, inputGuestEmail);
 		var invitedUsers = $filter('filter')(listOfInvitedGuest, inputGuestEmail);
 
@@ -88,6 +98,30 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			}
 		}
 	};
+
+
+	controller.checkGuestEmail = function () {
+		checkEmail(controller.guestEmail);
+	};
+
+	function checkEmail(currentValue) {		
+		if(typeof (currentValue) !== 'undefined'){
+			if (!currentValue.match(CheckemailValidation) ) {
+				currentValue.indexOf('@') > -1 ? controller.emailErrorMessage = ['Please enter a valid email address']:
+				controller.emailErrorMessage = [
+				'Please enter a valid email address', 
+				'A valid email should contain the symbol "@"'
+				];
+				controller.noValidEmail = true;
+				return false;
+			} else {            
+				controller.emailErrorMessage = [];
+				controller.noValidEmail = false;
+				return true;
+			}
+		}
+	}
+
 	/// --------------		Guest region		--------------/// 
 
 	/// --------------		foursquare region		--------------///
@@ -127,17 +161,17 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	controller.validationProcess = function () {
 		var eventFormPassed = false; // this is a reference to check if all required input are valid
 		// define variables for all the required input based on the ng-model variable 
-		var eventFormPassedEventName = checkRequiredFiled(controller.eventName);
-		var eventFormPassedEventType = checkRequiredFiled(controller.eventType);
-		var eventFormPassedState = checkRequiredFiled(controller.State);
-		var eventFormPassedCountry = checkRequiredFiled(controller.country);
-		var eventFormPassedEventHost =  checkRequiredFiled(controller.eventHost);
+		var eventFormPassedEventName = checkRequiredFiled(controller.eventName, false);
+		var eventFormPassedEventType = checkRequiredFiled(controller.eventType, false);
+		var eventFormPassedEventHost =  checkRequiredFiled(controller.eventHost, false);
+		var eventFormPassedEventStratDate = checkRequiredFiled(controller.eventStartDate, true);
+		var eventFormPassedEventEndDate = checkRequiredFiled(controller.eventEndtDate, true);
 
 		// check if all required input are valid
 		if(eventFormPassedEventName && 
 			eventFormPassedEventType && 
-			eventFormPassedState && 
-			eventFormPassedCountry &&
+			eventFormPassedEventStratDate &&
+			eventFormPassedEventEndDate &&
 			eventFormPassedEventHost){
 			// all required input are valid
 			eventFormPassed = true;
@@ -145,7 +179,6 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			// some or all input are invalid
 			eventFormPassed = false;
 		}
-
 
 		if (eventFormPassed) {
 			// form is valid ==> enable the submit button
@@ -156,15 +189,25 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		}
 	};
 
-	var checkRequiredFiled =  function (controllerName) {
+	var checkRequiredFiled =  function (controllerName, isDate) {		
 		if (typeof (controllerName) !== 'undefined') {
-			// input has value ==> is valid
-			return true;
+				// check if date 
+				if(isDate){
+					var validDate = new Date(controllerName);
+					if(validDate instanceof Date ){
+						return true;
+					}else{
+						return false;
+					}
+				}else{
+				// input has value ==> is valid
+				return true;
+			}
 		}else {
-			// input is empty ==> is invalid
-			return false;
-		}
-	};
+				// input is empty ==> is invalid
+				return false;
+			}
+		};
 
 	/// --------------		Validation region		--------------///
 
@@ -174,6 +217,17 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 	controller.addNewEvent = function(){
 		angular.element($('#event_Location')).triggerHandler('input');
 		var jsondata ;
+		var startDate = new Date(controller.eventStartDate);
+		var eventStartDate = startDate.getDate() + '-'  + 
+		startDate.toLocaleString('en-us', { month: 'long' }) + '-' + startDate.getFullYear();
+		var eventStartHour = startDate.getHours();
+		var eventStartMinute = startDate.getMinutes();
+		var EndDate = new Date(controller.eventEndtDate);
+		var eventEndDate = EndDate.getDate() + '-'  +
+		EndDate.toLocaleString('en-us', { month: 'long' }) + '-' + EndDate.getFullYear();
+		var eventEndHour = EndDate.getHours();
+		var eventEndMinute = EndDate.getMinutes();
+
 		if(localStorage.getItem('EventPlanerDB')) {
 			jsondata = JSON.parse(localStorage.getItem('EventPlanerDB'));
 		}else{
@@ -183,13 +237,13 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		newEvent.eventName=controller.eventName;
 		newEvent.eventType=controller.eventType ;
 		newEvent.eventStartDate={};
-		newEvent.eventStartDate.eventStartDate = controller.eventStartDate ;
-		newEvent.eventStartDate.eventStartHour =  controller.eventStartHour ;
-		newEvent.eventStartDate.eventStartMinute =  controller.eventStartMinute;
+		newEvent.eventStartDate.eventStartDate = eventStartDate ;
+		newEvent.eventStartDate.eventStartHour = eventStartHour;
+		newEvent.eventStartDate.eventStartMinute = eventStartMinute;
 		newEvent.eventEndtDate = {};
-		newEvent.eventEndtDate.eventEndtDate = controller.eventEndtDate ;
-		newEvent.eventEndtDate.eventEndHour =  controller.eventEndHour ;
-		newEvent.eventEndtDate.eventSEndMinute =  controller.eventEndMinute;
+		newEvent.eventEndtDate.eventEndtDate = eventEndDate;
+		newEvent.eventEndtDate.eventEndHour = eventEndHour;
+		newEvent.eventEndtDate.eventSEndMinute =eventEndMinute ;
 		newEvent.eventLocation={};
 		newEvent.eventLocation.eventLocation = controller.eventLocation;
 		newEvent.eventLocation.street_number = controller.street_number;

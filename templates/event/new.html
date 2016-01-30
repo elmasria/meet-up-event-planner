@@ -63,8 +63,9 @@
 							ng-model="eventNewCrt.eventName"
 							ng-change="eventNewCrt.validationProcess()"
 							ng-keyup ="eventNewCrt.eventNameClassSuccess = generalForm.eventName.$valid; eventNewCrt.eventNameClassError = generalForm.eventName.$invalid"
+							ng-blur ="eventNewCrt.eventNameClassSuccess = generalForm.eventName.$valid; eventNewCrt.eventNameClassError = generalForm.eventName.$invalid"
 							aria-describedby="inputEventNameStatus">
-							<span class="glyphicon form-control-feedback"
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
 							ng-class="{'glyphicon-ok': eventNewCrt.eventNameClassSuccess, 'glyphicon-remove': eventNewCrt.eventNameClassError }" 
 							aria-hidden="true">
 							</span>
@@ -100,7 +101,7 @@
 								<option value="Conference talk">
 								<option value="wedding">
 							</datalist>
-							<span class="glyphicon form-control-feedback"
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
 							ng-class="{'glyphicon-ok': eventNewCrt.eventTypeClassSuccess, 'glyphicon-remove': eventNewCrt.eventTypeClassError }" 
 							aria-hidden="true">
 							</span>
@@ -108,91 +109,54 @@
 							ng-bind="generalForm.eventType.$valid ? eventNewCrt.srResultEventType = '(success)': eventNewCrt.srResultEventType = '(error)'">({{eventNewCrt.srResultEventType}})</span>
 						</div>	
 					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
+					<div class="col-sm-6">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventStartDateClassSuccess, 'has-error' : eventNewCrt.eventstartDateClassError}">
 							<label for="event_startDate">
 								Event Start
 							</label>
-							<input type="text" 
+							<input type="datetime-local" 
 							id="event_startDate" 
 							name="eventStartDate"
 							class="form-control"
+							min="{{eventNewCrt.nowDate}}"
 							required
-							ng-model="eventNewCrt.eventStartDate">
+							ng-model="eventNewCrt.eventStartDate"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventStartDateClassSuccess = generalForm.eventStartDate.$valid; eventNewCrt.eventstartDateClassError = generalForm.eventStartDate.$invalid"
+							ng-blur ="eventNewCrt.eventStartDateClassSuccess = generalForm.eventStartDate.$valid; eventNewCrt.eventstartDateClassError = generalForm.eventStartDate.$invalid"
+							aria-describedby="inputEventtartDateStatus">
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventStartDateClassSuccess, 'glyphicon-remove': eventNewCrt.eventstartDateClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventtartDateStatus" class="sr-only"
+							ng-bind="generalForm.eventStartDate.$valid ? eventNewCrt.srResultEventstartDate = '(success)': eventNewCrt.srResultEventstartDate = '(error)'">({{eventNewCrt.srResultEventstartDate}})</span>
 						</div>	
 					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="event_startHour">
-								Hour
-							</label>
-							<input type="number" 
-							id="event_startHour" 
-							name="eventStartHour"
-							class="form-control"
-							required
-							ng-model="eventNewCrt.eventStartHour"
-							min="0"
-							max="23">
-						</div>	
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="event_startMinute">
-								Minute
-							</label>
-							<input type="number" 
-							id="event_startMinute" 
-							name="eventStartMinute"
-							class="form-control"
-							required
-							ng-model="eventNewCrt.eventStartMinute"
-							min="0"
-							max="59">
-						</div>	
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">							
+					<div class="col-sm-6">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventEndtDateClassSuccess, 'has-error' : eventNewCrt.eventEndtDateClassError}">							
 							<label for="event_endtDate">
 							Event End
 							</label>
-							<input type="text" 
+							<input type="datetime-local" 
 							min="{{eventNewCrt.eventStartDate}}"
 							id="event_endtDate" 
 							name="eventEndtDate"
 							class="form-control"
 							required
-							ng-model="eventNewCrt.eventEndtDate">
-						</div>	
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="event_EndHour">
-								Hour
-							</label>
-							<input type="number" 
-							id="event_EndHour" 
-							name="eventEndHour"
-							class="form-control"
-							required
-							ng-model="eventNewCrt.eventEndHour"
-							min="0"
-							max="23">
-						</div>	
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="event_EndMinute">
-								Minute
-							</label>
-							<input type="number" 
-							id="event_EndMinute" 
-							name="eventEndMinute"
-							class="form-control"
-							required
-							ng-model="eventNewCrt.eventEndMinute"
-							min="0"
-							max="59">
+							ng-model="eventNewCrt.eventEndtDate"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventEndtDateClassSuccess = generalForm.eventEndtDate.$valid; eventNewCrt.eventEndtDateClassError = generalForm.eventEndtDate.$invalid"
+							ng-blur ="eventNewCrt.eventEndtDateClassSuccess = generalForm.eventEndtDate.$valid; eventNewCrt.eventEndtDateClassError = generalForm.eventEndtDate.$invalid"
+							aria-describedby="inputEventEndtDateStatus">
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventEndtDateClassSuccess, 'glyphicon-remove': eventNewCrt.eventEndtDateClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventEndtDateStatus" class="sr-only"
+							ng-bind="generalForm.eventEndtDate.$valid ? eventNewCrt.srResultEventEndtDate = '(success)': eventNewCrt.srResultEventEndtDate = '(error)'">({{eventNewCrt.srResultEventEndtDate}})</span>
 						</div>	
 					</div>
 					<div class="col-sm-12">
@@ -225,9 +189,11 @@
 							placeholder="Lebanon, Beirut"
 							required
 							ng-model="eventNewCrt.eventLocation"
+							ng-change="eventNewCrt.validationProcess()"
 							ng-keyup ="eventNewCrt.eventLocationClassSuccess = generalForm.eventLocation.$valid; eventNewCrt.eventLocationClassError = generalForm.eventLocation.$invalid"
+							ng-blur="eventNewCrt.eventLocationClassSuccess = generalForm.eventLocation.$valid; eventNewCrt.eventLocationClassError = generalForm.eventLocation.$invalid"
 							aria-describedby="inputEventLocationStatus">
-							<span class="glyphicon form-control-feedback"
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
 							ng-class="{'glyphicon-ok': eventNewCrt.eventLocationClassSuccess, 'glyphicon-remove': eventNewCrt.eventLocationClassError }" 
 							aria-hidden="true">
 							</span>
@@ -263,7 +229,7 @@
 							ng-model="eventNewCrt.route">
 						</div>	
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" ng-show="false">
 						<div class="form-group">
 							<label for="locality">
 								City
@@ -288,7 +254,6 @@
 							autocomplete="State" 
 							class="form-control"
 							placeholder="Grenoble"
-							required
 							ng-model="eventNewCrt.State"
 							ng-change="eventNewCrt.validationProcess()">
 						</div>
@@ -307,7 +272,7 @@
 							ng-model="eventNewCrt.postal_code">
 						</div>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" ng-show="false">
 						<div class="form-group">
 							<label for="country">
 								country
@@ -318,32 +283,43 @@
 							autocomplete="country" 
 							class="form-control"
 							placeholder="France"
-							required
 							ng-model="eventNewCrt.country"
 							ng-change="eventNewCrt.validationProcess()">
 						</div>
 					</div>
-					<div class="col-sm-8">
-						<label for="event_Host">
-							Event host								
-							<i class="glyphicon glyphicon-info-sign"
-							data-toggle="tooltip"
-							data-placement="top" 
-							title="Event host">
-							</i>
-						</label>
-						<input list="eventHostList"
-						id="event_Host" 
-						name="eventHost"
-						autocomplete="eventHost" 
-						class="form-control"
-						placeholder="could be an individual’s name or an organization"
-						required
-						ng-model="eventNewCrt.eventHost"
-						ng-focus="eventNewCrt.getListOfHosts()"
-						ng-change="eventNewCrt.validationProcess()">
-						<datalist id="eventHostList">
-						</datalist>
+					<div class="col-sm-4">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventHostClassSuccess, 'has-error' : eventNewCrt.eventHostClassError}">
+							<label for="event_Host">
+								Event host								
+								<i class="glyphicon glyphicon-info-sign"
+								data-toggle="tooltip"
+								data-placement="top" 
+								title="Event host">
+								</i>
+							</label>
+							<input list="eventHostList"
+							id="event_Host" 
+							name="eventHost"
+							autocomplete="eventHost" 
+							class="form-control"
+							placeholder="could be an individual’s name or an organization"
+							required
+							ng-model="eventNewCrt.eventHost"
+							ng-focus="eventNewCrt.getListOfHosts()"
+							ng-change="eventNewCrt.validationProcess()"
+							aria-describedby="inputEventHost"
+							ng-keyup ="eventNewCrt.eventHostClassSuccess = generalForm.eventHost.$valid; eventNewCrt.eventHostClassError = generalForm.eventHost.$invalid"
+							ng-blur = "eventNewCrt.eventHostClassSuccess = generalForm.eventHost.$valid; eventNewCrt.eventHostClassError = generalForm.eventHost.$invalid">
+							<datalist id="eventHostList">
+							</datalist>
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventHostClassSuccess, 'glyphicon-remove': eventNewCrt.eventHostClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventHost" class="sr-only"
+							ng-bind="generalForm.eventHost.$valid ? eventNewCrt.srResultEventHost = '(success)': eventNewCrt.srResultEventHost = '(error)'">({{eventNewCrt.srResultEventHost}})</span>
+						</div>
 					</div>
 					<div class="col-sm-12">
 						<a href="#" 
@@ -379,15 +355,15 @@
 									autocomplete="email" 
 									class="form-control"
 									placeholder="yourfriend@example.com"
-									required
 									ng-model="eventNewCrt.guestEmail"
-									>
+									ng-change="eventNewCrt.checkGuestEmail()">
 								</div>
 								<div class="col-sm-2">
 									<button type="button"  
 									ng-click="eventNewCrt.addNewguest(); eventNewCrt.preventEvent($event)"  
 									class="btn btn-default"
-									ng-disabled="generalForm.email.$invalid">Add to List</button>
+									ng-init="eventNewCrt.noValidEmail = true"
+									ng-disabled="eventNewCrt.noValidEmail">Add to List</button>
 								</div>
 								<div class="col-sm-2">
 									<button type="button" id="listOfUsers" ng-click="eventNewCrt.preventEvent($event)" class="btn btn-info"  data-toggle="modal"  ng-disabled="eventNewCrt.noUsers" data-target="#myModal">
@@ -505,7 +481,6 @@
 </div>
 <script>
 	checkTooltip();
-	datePickerInitialization();
 </script>
 <script 
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS1EF2hXm_4AllBuUh7RZtod8li9X9k6g&signed_in=true&libraries=places&callback=initAutocomplete" async defer>
