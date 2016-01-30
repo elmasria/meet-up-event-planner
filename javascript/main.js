@@ -61,6 +61,14 @@ function passwordToogleListOfErrors(){
 		$('#listOfEndDateErrors').fadeIn('slow');
 	});	
 
+	$('#event_guestEmail').on('blur', function () {
+		$('#listOfEmailErrors').fadeOut('slow');
+	});
+
+	$('#event_guestEmail').on('focus', function () {
+		$('#listOfEmailErrors').fadeIn('slow');
+	});	
+
 }
 
 

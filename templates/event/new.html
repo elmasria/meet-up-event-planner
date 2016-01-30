@@ -208,7 +208,8 @@
 						</div>	
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventstreetnumberClassSuccess, 'has-error' : eventNewCrt.eventstreetnumberClassError}">
 							<label for="street_number">
 								Street Number
 							</label>
@@ -217,12 +218,24 @@
 							name="streetnumber"
 							autocomplete="streetnumber" 
 							class="form-control"
+							required
 							placeholder="75"
-							ng-model="eventNewCrt.street_number">
+							ng-model="eventNewCrt.street_number"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventstreetnumberClassSuccess = generalForm.streetnumber.$valid; eventNewCrt.eventstreetnumberClassError = generalForm.streetnumber.$invalid"
+							ng-blur="eventNewCrt.eventstreetnumberClassSuccess = generalForm.streetnumber.$valid; eventNewCrt.eventstreetnumberClassError = generalForm.streetnumber.$invalid"
+							aria-describedby="inputEventstreetnumberStatus">
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventstreetnumberClassSuccess, 'glyphicon-remove': eventNewCrt.eventstreetnumberClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventstreetnumberStatus" class="sr-only"
+							ng-bind="generalForm.streetnumber.$valid ? eventNewCrt.srResultEventstreetnumber = '(success)': eventNewCrt.srResultEventstreetnumber = '(error)'">({{eventNewCrt.srResultEventstreetnumber}})</span>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventrouteClassSuccess, 'has-error' : eventNewCrt.eventrouteClassError}">
 							<label for="route">
 								Street Name
 							</label>
@@ -231,8 +244,19 @@
 							name="route"
 							autocomplete="route" 
 							class="form-control"
+							required
 							placeholder="Nicolas Chorier"
-							ng-model="eventNewCrt.route">
+							ng-model="eventNewCrt.route"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventrouteClassSuccess = generalForm.route.$valid; eventNewCrt.eventrouteClassError = generalForm.route.$invalid"
+							ng-blur="eventNewCrt.eventrouteClassSuccess = generalForm.route.$valid; eventNewCrt.eventrouteClassError = generalForm.route.$invalid"
+							aria-describedby="inputEventrouteStatus">
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventrouteClassSuccess, 'glyphicon-remove': eventNewCrt.eventrouteClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventrouteStatus" class="sr-only"
+							ng-bind="generalForm.route.$valid ? eventNewCrt.srResultEventroute = '(success)': eventNewCrt.srResultEventroute = '(error)'">({{eventNewCrt.srResultEventroute}})</span>
 						</div>	
 					</div>
 					<div class="col-sm-4" ng-show="false">
@@ -250,7 +274,8 @@
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventStateClassSuccess, 'has-error' : eventNewCrt.eventStateClassError}">
 							<label for="administrative_area_level_1">
 								State
 							</label>
@@ -260,12 +285,23 @@
 							autocomplete="State" 
 							class="form-control"
 							placeholder="Grenoble"
+							required
 							ng-model="eventNewCrt.State"
-							ng-change="eventNewCrt.validationProcess()">
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventStateClassSuccess = generalForm.State.$valid; eventNewCrt.eventStateClassError = generalForm.State.$invalid"
+							ng-blur="eventNewCrt.eventStateClassSuccess = generalForm.State.$valid; eventNewCrt.eventStateClassError = generalForm.State.$invalid"
+							aria-describedby="inputEventStateStatus">
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventStateClassSuccess, 'glyphicon-remove': eventNewCrt.eventStateClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventStateStatus" class="sr-only"
+							ng-bind="generalForm.State.$valid ? eventNewCrt.srResultEventState = '(success)': eventNewCrt.srResultEventState = '(error)'">({{eventNewCrt.srResultEventState}})</span>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
+						<div class="form-group has-feedback"
+						ng-class="{'has-success': eventNewCrt.eventpostal_codeClassSuccess, 'has-error' : eventNewCrt.eventpostal_codeClassError}">
 							<label for="postal_code">
 								Postal code
 							</label>
@@ -275,7 +311,18 @@
 							autocomplete="postal_code" 
 							class="form-control"
 							placeholder="38000"
-							ng-model="eventNewCrt.postal_code">
+							required
+							ng-model="eventNewCrt.postal_code"
+							ng-change="eventNewCrt.validationProcess()"
+							ng-keyup ="eventNewCrt.eventpostal_codeClassSuccess = generalForm.postal_code.$valid; eventNewCrt.eventpostal_codeClassError = generalForm.postal_code.$invalid"
+							ng-blur="eventNewCrt.eventpostal_codeClassSuccess = generalForm.postal_code.$valid; eventNewCrt.eventpostal_codeClassError = generalForm.postal_code.$invalid"
+							aria-describedby="inputEventStateStatus">
+							<span class="glyphicon glyphicon-asterisk form-control-feedback"
+							ng-class="{'glyphicon-ok': eventNewCrt.eventpostal_codeClassSuccess, 'glyphicon-remove': eventNewCrt.eventpostal_codeClassError }" 
+							aria-hidden="true">
+							</span>
+							<span id="inputEventStateStatus" class="sr-only"
+							ng-bind="generalForm.postal_code.$valid ? eventNewCrt.srResultEventpostal_code = '(success)': eventNewCrt.srResultEventpostal_code = '(error)'">({{eventNewCrt.srResultEventpostal_code}})</span>
 						</div>
 					</div>
 					<div class="col-sm-4" ng-show="false">
@@ -362,7 +409,11 @@
 									class="form-control"
 									placeholder="yourfriend@example.com"
 									ng-model="eventNewCrt.guestEmail"
-									ng-change="eventNewCrt.checkGuestEmail()">
+									ng-change="eventNewCrt.checkGuestEmail(eventNewCrt.guestEmail)"
+									ng-keyup="eventNewCrt.checkGuestEmail(eventNewCrt.guestEmail)">
+									<ul id="listOfEmailErrors" class="list-group" >
+										<li ng-repeat="error in eventNewCrt.emailErrorMessage" class="list-group-item list-group-item-danger">{{error}}</li>
+									</ul>
 								</div>
 								<div class="col-sm-2">
 									<button type="button"  

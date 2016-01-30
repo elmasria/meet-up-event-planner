@@ -101,8 +101,8 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		}
 	};
 
-	controller.checkGuestEmail = function () {
-		checkEmail(controller.guestEmail);
+	controller.checkGuestEmail = function (currentValue) {
+		checkEmail(currentValue);
 	};
 
 	function checkEmail(currentValue) {
@@ -120,6 +120,10 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 				controller.noValidEmail = false;
 				return true;
 			}
+		}else{
+			controller.emailErrorMessage = [
+				'Please enter a valid email address'
+				];
 		}
 	}
 
@@ -164,7 +168,14 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		// define variables for all the required input based on the ng-model variable 
 		var eventFormPassedEventName = checkRequiredFiled(controller.eventName, false,false,false);
 		var eventFormPassedEventType = checkRequiredFiled(controller.eventType, false, false, false);
+
+		var eventFormPassedEventstreetnumber =  checkRequiredFiled(controller.street_number, false, false, false);		
+		var eventFormPassedEventroute =  checkRequiredFiled(controller.route, false, false, false);	
+		var eventFormPassedEventState =  checkRequiredFiled(controller.State, false, false, false);
+		var eventFormPassedEventpostal_code =  checkRequiredFiled(controller.postal_code, false, false, false);
+
 		var eventFormPassedEventHost =  checkRequiredFiled(controller.eventHost, false, false, false);
+
 		var eventFormPassedEventStratDate = checkRequiredFiled(controller.eventStartDate, true, true, false);
 		var eventFormPassedEventEndDate = checkRequiredFiled(controller.eventEndtDate, true, false, true);
 
@@ -173,6 +184,10 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 			eventFormPassedEventType && 
 			eventFormPassedEventStratDate &&
 			eventFormPassedEventEndDate &&
+			eventFormPassedEventstreetnumber &&
+			eventFormPassedEventroute &&
+			eventFormPassedEventState &&
+			eventFormPassedEventpostal_code &&
 			eventFormPassedEventHost){
 			// all required input are valid
 			eventFormPassed = true;
