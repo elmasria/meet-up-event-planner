@@ -86,7 +86,7 @@ var NewUser = function  (fName, lName, email, password, doBirth, cName, CountryN
 	this.newUser.countryName = CountryName;
 	this.newUser.gender = gender;
 	this.newUser.biography = biography;
-	meetUpEventPlannerDB.users.push(this.newUser);
+	return this.newUser;
 
 };
 
@@ -100,7 +100,7 @@ var NewEvent = function  () {
 		this.newEvent.eventLocation=eLocation;
 		this.newEvent.eventGuestList = eGuestList;
 		this.newEvent.eventMessage = eMessage; 
-		meetUpEventPlannerDB.events.push(this.newEvent);
+		return this.newEvent;
 	};
 };
 
@@ -149,19 +149,61 @@ NewEvent.prototype.addguest = function (emails) {
 
 
 if(localStorage.getItem('EventPlanerDB')) {
-	//dataBase = JSON.parse(localStorage.getItem('EventPlanerDB'));
-	localStorage.removeItem('EventPlanerDB');
+	var db = JSON.parse(localStorage.getItem('EventPlanerDB'));
+	if(db.events.length>0){
+
+	}else{
+		var testEvent = new NewEvent();
+		var strateDate = new testEvent.addStartDate('29-Jan-2017','8','00');
+		var EndDate = new testEvent.addEndDate('29-Jan-2017','20','00');
+		var EventLocation = new testEvent.addLocation('Beirut, Lebanon','24', 'isteklal', 'Beirut', 'beirut', '110300', 'Lebanon', 'Quadrus Conference Center');
+		var Guests = new testEvent.addguest(['guest1@email.com','guest2@email.com','guest3@email.com','guest4@email.com']);
+		var testEvent = new testEvent.addEvent('Intersect 2016', 'Live Stream', strateDate, EndDate, EventLocation, Guests, 'A one day summit for Nanodegree students and grads to connect with some of Silicon Vally\'s top companies, thought leaders and Udacity instructors.');
+		db.events.push(testEvent);
+
+
+		var testEvent2 = new NewEvent();
+		var strateDate2 = new testEvent2.addStartDate('29-Jan-2017','8','00');
+		var EndDate2 = new testEvent2.addEndDate('29-Jan-2017','20','00');
+		var EventLocation2 = new testEvent2.addLocation('Beirut, Lebanon','24', 'isteklal', 'Beirut', 'beirut', '110300', 'Lebanon', 'Quadrus Conference Center');
+		var Guests2 = new testEvent2.addguest(['guest1@email.com','guest2@email.com','guest3@email.com','guest4@email.com']);
+		var event2 = new testEvent2.addEvent('Imagine Cup', 'Student competition', strateDate, EndDate, EventLocation, Guests, 'Imagine Cup is a global student technology program and competition that provides opportunities for students across all disciplines to team up and use their creativity, passion and knowledge of technology to create applications, games and integrate solutions that can change the way we live, work and play.');
+		db.events.push(event2);
+
+		localStorage.removeItem('EventPlanerDB');
+		localStorage.setItem('EventPlanerDB',JSON.stringify(db));
+		db = JSON.parse(localStorage.getItem('EventPlanerDB'));
+	}
+	if(db.users.length === 0){
+		var testUser = new NewUser('Ahmad', 'El Masri', 'ahmadjelmasri@gmail.com', 'Passw0rd123', '25-July-1988', '', 'Lebanon', 'Male', 'Ahmad bio');
+		db.users.push(testUser);
+		localStorage.removeItem('EventPlanerDB');
+		localStorage.setItem('EventPlanerDB',JSON.stringify(db));
+		db = JSON.parse(localStorage.getItem('EventPlanerDB'));
+	}
 }else{
+	meetUpEventPlannerDB = {events: [], users:[],loggedInUser:''};
+	var testUser = new NewUser('Ahmad', 'El Masri', 'ahmadjelmasri@gmail.com', 'Passw0rd123', '25-July-1988', '', 'Lebanon', 'Male', 'Ahmad bio');
+	meetUpEventPlannerDB.users.push(testUser);
+	var testEvent = new NewEvent();
+	var strateDate = new testEvent.addStartDate('29-Jan-2017','8','00');
+	var EndDate = new testEvent.addEndDate('29-Jan-2017','20','00');
+	var EventLocation = new testEvent.addLocation('Beirut, Lebanon','24', 'isteklal', 'Beirut', 'beirut', '110300', 'Lebanon', 'Quadrus Conference Center');
+	var Guests = new testEvent.addguest(['guest1@email.com','guest2@email.com','guest3@email.com','guest4@email.com']);
+	var event1 = new testEvent.addEvent('Intersect 2016', 'Live Stream', strateDate, EndDate, EventLocation, Guests, 'A one day summit for Nanodegree students and grads to connect with some of Silicon Vally\'s top companies, thought leaders and Udacity instructors.');
+	meetUpEventPlannerDB.events.push(event1);
+
+
+
+	var testEvent2 = new NewEvent();
+	var strateDate2 = new testEvent2.addStartDate('29-Jan-2017','8','00');
+	var EndDate2 = new testEvent2.addEndDate('29-Jan-2017','20','00');
+	var EventLocation2 = new testEvent2.addLocation('Beirut, Lebanon','24', 'isteklal', 'Beirut', 'beirut', '110300', 'Lebanon', 'Quadrus Conference Center');
+	var Guests2 = new testEvent2.addguest(['guest1@email.com','guest2@email.com','guest3@email.com','guest4@email.com']);
+	var event2 = new testEvent2.addEvent('Imagine Cup', 'Student competition', strateDate, EndDate, EventLocation, Guests, 'Imagine Cup is a global student technology program and competition that provides opportunities for students across all disciplines to team up and use their creativity, passion and knowledge of technology to create applications, games and integrate solutions that can change the way we live, work and play.');
+	meetUpEventPlannerDB.events.push(event2);
+
+
+	localStorage.setItem('EventPlanerDB',JSON.stringify(meetUpEventPlannerDB));
 
 }
-meetUpEventPlannerDB = {events: [], users:[],loggedInUser:''};
-
-var testUser = new NewUser('Ahmad', 'El Masri', 'ahmadjelmasri@gmail.com', 'Passw0rd123', '25-July-1988', '', 'Lebanon', 'Male', 'Ahmad bio');
-
-var testEvent = new NewEvent();
-var strateDate = new testEvent.addStartDate('29-Jan-2016','8','00');
-var EndDate = new testEvent.addEndDate('29-Jan-2016','20','00');
-var EventLocation = new testEvent.addLocation('Beirut, Lebanon','24', 'isteklal', 'Beirut', 'beirut', '110300', 'Lebanon', 'Quadrus Conference Center');
-var Guests = new testEvent.addguest(['guest1@email.com','guest2@email.com','guest3@email.com','guest4@email.com']);
-var testEvent = new testEvent.addEvent('Intersect 2016', 'Live Stream', strateDate, EndDate, EventLocation, Guests, 'A one day summit for Nanodegree students and grads to connect with some of Silicon Vally\'s top companies, thought leaders and Udacity instructors.');
-localStorage.setItem('EventPlanerDB',JSON.stringify(meetUpEventPlannerDB));

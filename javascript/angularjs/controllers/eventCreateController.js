@@ -284,7 +284,7 @@ angular.module('EventPlanner').controller('EventNewController', function ($filte
 		for (var i = 0; i < jsondata.events.length; i++) {
 			existingEvent.push(jsondata.events[i].eventName);
 		}
-		var eventExist = $filter('filter')(existingEvent, controller.eventName);
+		var eventExist = $filter('filter')(existingEvent, controller.eventName, true);
 		if (eventExist.length > 0) {
 			controller.errorMessage = controller.eventName + ' already exist !';
 			controller.showError = true;
